@@ -14,6 +14,6 @@ knife upload --chef-repo-path . .
 cd policyfiles
 for f in `find .|grep .rb`; do
   chef install $f
-  group=`echo $a|awk -F '/' '{print $2}'`
+  group=`echo $f|awk -F '/' '{print $2}'`
   chef push $group $f
 done

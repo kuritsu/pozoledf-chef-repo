@@ -48,10 +48,8 @@ cat >~/.chef/config.rb <<EOF
 ssl_verify_mode  :verify_none
 EOF
 
-chmod a+x ./repo/scripts/install-chef-client.sh
 
-./repo/scripts/install-chef-client.sh
-
-
+bash ./repo/scripts/install-chef-client.sh
+bash ./repo/cookbooks/pozoledf-chef-server/files/repo-sync.sh
 
 echo "===> IMPORTANT: Keep your $CHEF_ADMIN_USER.pem and $ORG_NAME.pem files at hand in a safe place."
