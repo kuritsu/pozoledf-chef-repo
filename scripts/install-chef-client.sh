@@ -32,7 +32,7 @@ use_policyfile   true
 json_attribs     '/etc/chef/attr.json'
 EOF
 
-test !-f "/etc/chef/attr.json" ] && echo "{}" >/etc/chef/attr.json
+test ! -f "/etc/chef/attr.json" && echo "{}" >/etc/chef/attr.json
 
 chef-client --chef-license=accept
 rm -rf /etc/chef/validation.pem

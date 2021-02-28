@@ -52,11 +52,9 @@ include_recipe 'jenkins::master'
 
 jenkins_plugin 'github'
 jenkins_plugin 'blueocean'
-jenkins_plugin 'workflow-multibranch'
 
 jenkins_command 'safe-restart' do
   action :nothing
   subscribes :execute, 'jenkins_plugin[github]', :delayed
   subscribes :execute, 'jenkins_plugin[blueocean]', :delayed
-  subscribes :execute, 'jenkins_plugin[workflow-multibranch]', :delayed
 end

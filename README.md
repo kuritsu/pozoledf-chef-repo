@@ -16,6 +16,10 @@ You will need the following machines running RHEL 7|8 / CentOS 7|8 (we suggest y
 
 - 1 x Chef Infra Server/Chef Automate (prerequisite of the other ones)
   - Run [scripts/install-chef-server.sh](https://github.com/kuritsu/pozoledf-chef-repo/tree/main/scripts/install-chef-server.sh).
+  - Run [scripts/install-chef-client.sh](https://github.com/kuritsu/pozoledf-chef-repo/tree/main/scripts/install-chef-client.sh), but before make sure you set the following
+  environment variables:
+    - NODE_ENV: dev
+    - NODE_ROLE: chef-server
 - 1 x Chef Habitat Builder (for storing Habitat deployment packages)
   - Run [scripts/install-chef-client.sh](https://github.com/kuritsu/pozoledf-chef-repo/tree/main/scripts/install-chef-client.sh), but before make sure you set the following
   environment variables:
