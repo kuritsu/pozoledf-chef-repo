@@ -14,8 +14,6 @@
 #
 
 yum makecache && yum install -y git
-rm -rf repo
-git clone https://github.com/kuritsu/pozoledf-chef-repo.git repo
 
 rpm -Uvh https://packages.chef.io/files/stable/chef-server/14.0.65/el/8/chef-server-core-14.0.65-1.el7.x86_64.rpm
 rpm -Uvh https://packages.chef.io/files/stable/chef-workstation/21.2.278/el/8/chef-workstation-21.2.278-1.el7.x86_64.rpm
@@ -48,8 +46,12 @@ cat >~/.chef/config.rb <<EOF
 ssl_verify_mode  :verify_none
 EOF
 
+current_dir=$PWD
+mkdir -p /var/chef
+cd /var/chef
+git clone https://github.com/kuritsu/pozoledf-chef-repo.git /var/chef/repo
 
-bash ./repo/scripts/install-chef-client.sh
-bash ./repo/cookbooks/pozoledf-chef-server/files/repo-sync.sh
+bash /var/chef/repo/scripts/install-chef-client.sh
+bash /var/chef/repo/cookbooks/pozoledf-chef-server/files/repo-sync.sh
 
 echo "===> IMPORTANT: Keep your $CHEF_ADMIN_USER.pem and $ORG_NAME.pem files at hand in a safe place."
