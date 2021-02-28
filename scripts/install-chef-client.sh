@@ -14,11 +14,9 @@
 #                      install-chef-server.sh script).
 #
 
-rpm -Uvh https://packages.chef.io/files/stable/chef/16.10.17/el/8/chef-16.10.17-1.el7.x86_64.rpm
-mkdir -p ~/.chef/trusted_certs/
+rpm -Uvh https://packages.chef.io/files/stable/chef-workstation/21.2.278/el/8/chef-workstation-21.2.278-1.el7.x86_64.rpm
 mkdir -p /etc/chef
 cp $VALIDATE_PEM_FILE /etc/chef/validation.pem
-cp $VALIDATE_PEM_FILE ~/.chef/trusted_certs/
 
 cat >/etc/chef/client.rb <<EOF
 log_location     STDOUT
@@ -35,7 +33,6 @@ EOF
 test ! -f "/etc/chef/attr.json" && echo "{}" >/etc/chef/attr.json
 
 chef-client --chef-license=accept
-rm -rf /etc/chef/validation.pem
-rm -rf $VALIDATE_PEM_FILE
 
-echo "===> IMPORTANT: Chef Infra client and node role installed."
+echo "===> Chef Infra client and node role installed."
+echo "===> IMPORTANT: Remove the validation keys manually."

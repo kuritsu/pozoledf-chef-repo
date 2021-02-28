@@ -22,16 +22,31 @@ chef-server-ctl user-create $CHEF_ADMIN_USER \
   "$CHEF_ADMIN_USER_EMAIL" \
   "$CHEF_ADMIN_USER_PASSWORD" --filename $CHEF_ADMIN_USER.pem
 chef-server-ctl org-create $ORG_NAME "$ORG_NAME_LONG" \
+  -s https://$CHEF_SERVER_FQDN \
   --association_user $CHEF_ADMIN_USER --filename $ORG_NAME.pem
-
-curl -O https://raw.githubusercontent.com/kuritsu/pozoledf-chef-repo/main/scripts/install-chef-client.sh
-
-chmod a+x ./install-chef-client.sh
 
 export NODE_ENV=dev
 export NODE_ROLE=chef-server
 export SERVER_URL=https://$CHEF_SERVER_FQDN/organizations/$ORG_NAME
 export VALIDATE_PEM_FILE=$ORG_NAME.pem
+
+mkdir -p ~/.chef/
+cp -u $CHEF_ADMIN_USER.pem ~/.chef/
+
+cat >~/.chef/credentials <<EOF
+[default]
+client_name     = '$CHEF_ADMIN_USER'
+client_key      = '$CHEF_ADMIN_USER.pem'
+chef_server_url = '$SERVER_URL'
+EOF
+
+cat >~/.chef/config.rb <<EOF
+ssl_verify_mode  :verify_none
+EOF
+
+curl -O https://raw.githubusercontent.com/kuritsu/pozoledf-chef-repo/main/scripts/install-chef-client.sh
+
+chmod a+x ./install-chef-client.sh
 
 ./install-chef-client.sh
 
@@ -44,5 +59,9 @@ git checkout main
 git pull origin main
 
 knife upload .
+cd policyfiles
+chef install
+chef upload
+
 
 echo "===> IMPORTANT: Keep your $CHEF_ADMIN_USER.pem and $ORG_NAME.pem files at hand in a safe place."
