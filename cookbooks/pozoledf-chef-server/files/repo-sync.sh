@@ -9,13 +9,11 @@ cd repo
 git checkout main
 git pull origin main
 
-knife upload .
-cd nodes
-for p in `find .|grep .json`; do 
-  node=`cat $p|jq -r .name`
-  policies=`cat $p|jq -r '.policies|join(" ")'`
-  policy_group=`echo $p|awk 'BEGIN { FS = "/" } ; { print $2 }'`
-  for policy_name in `echo $policies`; do
-    echo knife node policy set $node $policy_group $policy_name
-  done
+knife upload --chef-repo-path . .
+
+cd policyfiles
+for f in `find .|grep .rb`; do
+  chef install $f
+  group=`echo $a|awk -F '/' '{print $2}'`
+  chef push $group $f
 done

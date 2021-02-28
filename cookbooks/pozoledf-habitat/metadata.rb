@@ -1,4 +1,4 @@
-name 'pozoledf-habitat-chef'
+name 'pozoledf-habitat'
 maintainer 'Jeffrey Alvarez'
 maintainer_email 'kuritsu@gmail.com'
 license 'All Rights Reserved'
