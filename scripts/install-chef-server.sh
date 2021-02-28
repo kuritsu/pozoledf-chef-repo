@@ -15,6 +15,7 @@
 
 yum makecache && yum install -y git
 rpm -Uvh https://packages.chef.io/files/stable/chef-server/14.0.65/el/8/chef-server-core-14.0.65-1.el7.x86_64.rpm
+rpm -Uvh https://packages.chef.io/files/stable/chef-workstation/21.2.278/el/8/chef-workstation-21.2.278-1.el7.x86_64.rpm
 chef-server-ctl reconfigure --chef-license=accept
 chef-server-ctl user-create $CHEF_ADMIN_USER \
   "$CHEF_ADMIN_USER_FIRST_NAME" \

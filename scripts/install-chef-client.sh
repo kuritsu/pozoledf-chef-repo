@@ -14,7 +14,7 @@
 #                      install-chef-server.sh script).
 #
 
-rpm -Uvh https://packages.chef.io/files/stable/chef-workstation/21.2.278/el/8/chef-workstation-21.2.278-1.el7.x86_64.rpm
+rpm -Uvh https://packages.chef.io/files/stable/chef/16.10.17/el/8/chef-16.10.17-1.el7.x86_64.rpm
 mkdir -p /etc/chef
 cp $VALIDATE_PEM_FILE /etc/chef/validation.pem
 
@@ -35,4 +35,4 @@ test ! -f "/etc/chef/attr.json" && echo "{}" >/etc/chef/attr.json
 chef-client --chef-license=accept
 
 echo "===> Chef Infra client and node role installed."
-echo "===> IMPORTANT: Remove the validation keys manually."
+echo "===> IMPORTANT:Remove the validation keys manually."
