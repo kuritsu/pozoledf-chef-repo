@@ -1,0 +1,37 @@
+[deployment.v1.svc]
+  products=["automate", "infra-server"]
+
+[global.v1]
+  # The external fully qualified domain name.
+  # When the application is deployed you should be able to access 'https://<fqdn>/'
+  # to login.
+  fqdn = "<%= chef_automate_fqdn %>"
+
+  [[global.v1.frontend_tls]]
+    # The TLS certificate for the load balancer frontend.
+    cert = """<%= chef_automate_cert %>
+"""
+
+    # The TLS RSA key for the load balancer frontend.
+    key = """<%= chef_automate_key %>
+"""
+
+[deployment.v1]
+  [deployment.v1.svc]
+    channel = "current"
+    upgrade_strategy = "at-once"
+    deployment_type = "local"
+
+[license_control.v1]
+  [license_control.v1.svc]
+    license = ""
+
+[elasticsearch.v1.sys.runtime]
+  heapsize = "2g"
+
+[load_balancer.v1.sys.service]
+  http_port = 8081
+  https_port = 8443
+
+[postgresql.v1.sys.service]
+  port = 5433
