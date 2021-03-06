@@ -40,6 +40,14 @@ template base_dir + '/config.toml' do
             base_dir: base_dir)
 end
 
+sysctl 'vm.max_map_count' do
+  value 262144
+end
+
+sysctl 'vm.dirty_expire_centisecs' do
+  value 30000
+end
+
 bash 'run-installer' do
   cwd base_dir
   code <<-EOH

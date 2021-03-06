@@ -18,6 +18,5 @@ rpm -Uvh https://packages.chef.io/files/stable/chef/16.10.17/el/8/chef-16.10.17-
 yum makecache && yum install -y git
 mkdir -p /var/chef && cd /var/chef && rm -rf repo
 git clone https://github.com/kuritsu/pozoledf-chef-repo.git repo && cd repo
-echo '{"run_list": ["recipe["pozoledf-chef-server"]]}' >run_list.json
-chef-solo --chef-license accept -j run_list.json
-chef-client --chef-license accept
+echo '{"run_list": ["recipe[pozoledf-chef-server]"]}' >run_list.json
+chef-client -z -j run_list.json --chef-license accept
