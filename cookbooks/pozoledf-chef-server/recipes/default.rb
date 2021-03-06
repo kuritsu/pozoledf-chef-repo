@@ -28,7 +28,7 @@ bash 'download-extract' do
       -keyout ssl-certificate.key \
       -subj "/C=US/ST=CA/L=Mountain View/O=Pozoledf/OU=Automation/CN=#{ENV["CHEF_SERVER_HOSTNAME"]}"
   EOH
-  not_if { ::File.exist?(base_dir + '/chef-automate') }
+  creates base_dir + '/chef-automate'
 end
 
 template base_dir + '/config.toml' do
@@ -60,5 +60,28 @@ bash 'run-installer' do
   cp $service_key .
   cp $service_crt .
   EOH
-  not_if { ::File.exist?(base_dir + '/service.key') }
+  creates base_dir + '/service.key'
+end
+
+bash 'create-admin-user' do
+  cwd base_dir
+  code <<-EOH
+    chef-server-ctl user-create $CHEF_ADMIN_USER \
+        "$CHEF_ADMIN_USER_FIRST_NAME" \
+        "$CHEF_ADMIN_USER_LAST_NAME" \
+        "$CHEF_ADMIN_USER_EMAIL" \
+        "$CHEF_ADMIN_USER_PASSWORD" --filename $CHEF_ADMIN_USER.pem
+  EOH
+  environment ENV
+  creates base_dir + "/#{ENV["CHEF_ADMIN_USER"]}.pem"
+end
+
+bash 'create-org' do
+  cwd base_dir
+  code <<-EOH
+    chef-server-ctl org-create $ORG_NAME "$ORG_NAME_LONG" \
+      --association_user $CHEF_ADMIN_USER --filename $ORG_NAME.pem
+  EOH
+  environment ENV
+  creates base_dir + "/#{ENV["ORG_NAME"]}.pem"
 end
