@@ -1,26 +1,22 @@
 [deployment.v1.svc]
-  products=["automate", "infra-server"]
+  products=["automate", "infra-server", "builder"]
+  upgrade_strategy = "at-once"
+  deployment_type = "local"
 
 [global.v1]
   # The external fully qualified domain name.
   # When the application is deployed you should be able to access 'https://<fqdn>/'
   # to login.
-  fqdn = "<%= chef_automate_fqdn %>"
+  fqdn = "<%= @chef_automate_fqdn %>"
 
   [[global.v1.frontend_tls]]
     # The TLS certificate for the load balancer frontend.
-    cert = """<%= chef_automate_cert %>
+    cert = """<%= ::File.read(@base_dir + '/ssl-certificate.crt').chomp %>
 """
 
     # The TLS RSA key for the load balancer frontend.
-    key = """<%= chef_automate_key %>
+    key = """<%= ::File.read(@base_dir + '/ssl-certificate.key').chomp %>
 """
-
-[deployment.v1]
-  [deployment.v1.svc]
-    channel = "current"
-    upgrade_strategy = "at-once"
-    deployment_type = "local"
 
 [license_control.v1]
   [license_control.v1.svc]

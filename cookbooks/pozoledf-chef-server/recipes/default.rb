@@ -28,7 +28,7 @@ bash 'download-extract' do
       -keyout ssl-certificate.key \
       -subj "/C=US/ST=CA/L=Mountain View/O=Pozoledf/OU=Automation/CN=#{ENV["CHEF_SERVER_HOSTNAME"]}"
   EOH
-  not_if { ::File.exist?(base_dir + '/chef-automate_linux_amd64.zip') }
+  not_if { ::File.exist?(base_dir + '/chef-automate') }
 end
 
 template base_dir + '/config.toml' do
@@ -36,9 +36,8 @@ template base_dir + '/config.toml' do
   owner  'root'
   group  'root'
   mode   '0755'
-  variables (chef_automate_fqdn: ENV["CHEF_SERVER_FQDN"],
-             chef_automate_cert: ::File.read('ssl-certificate.crt').chomp,
-             chef_automate_key:  ::File.read('ssl-certificate.key').chomp)
+  variables(chef_automate_fqdn: ENV['CHEF_SERVER_FQDN'],
+            base_dir: base_dir)
 end
 
 bash 'run-installer' do
