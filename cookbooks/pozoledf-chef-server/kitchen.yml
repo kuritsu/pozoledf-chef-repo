@@ -23,6 +23,13 @@ platforms:
       intermediate_instructions:
         - ENV CHEF_SERVER_HOSTNAME=controller
         - ENV CHEF_SERVER_FQDN=controller.internal
+        - ENV CHEF_ADMIN_USER=admin
+        - ENV CHEF_ADMIN_USER_FIRST_NAME=Admin
+        - ENV CHEF_ADMIN_USER_LAST_NAME=Istrator
+        - ENV CHEF_ADMIN_USER_EMAIL=admin@email.com
+        - ENV CHEF_ADMIN_USER_PASSWORD=P4ssw0rd
+        - ENV ORG_NAME=mycompany
+        - ENV ORG_NAME_LONG="My Company"
       privileged: true
       pid_one_command: /usr/lib/systemd/systemd
       volumes:

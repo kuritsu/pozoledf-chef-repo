@@ -72,7 +72,7 @@ bash 'create-admin-user' do
         "$CHEF_ADMIN_USER_EMAIL" \
         "$CHEF_ADMIN_USER_PASSWORD" --filename $CHEF_ADMIN_USER.pem
   EOH
-  environment ENV
+  environment ENV.to_h
   creates base_dir + "/#{ENV["CHEF_ADMIN_USER"]}.pem"
 end
 
@@ -82,6 +82,6 @@ bash 'create-org' do
     chef-server-ctl org-create $ORG_NAME "$ORG_NAME_LONG" \
       --association_user $CHEF_ADMIN_USER --filename $ORG_NAME.pem
   EOH
-  environment ENV
+  environment ENV.to_h
   creates base_dir + "/#{ENV["ORG_NAME"]}.pem"
 end
