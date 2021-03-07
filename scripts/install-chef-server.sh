@@ -20,3 +20,14 @@ mkdir -p /var/chef && cd /var/chef && rm -rf repo
 git clone https://github.com/kuritsu/pozoledf-chef-repo.git repo && cd repo
 echo '{"run_list": ["recipe[pozoledf-chef-server]"]}' >run_list.json
 chef-client -z -j run_list.json --chef-license accept
+
+mkdir -p ~/.chef
+cp -u /opt/chef-server-install/${CHEF_ADMIN_USER}.pem ~/.chef
+cat >~/.chef/credentials <<EOF
+[${CHEF_ADMIN_USER}]
+client_name     = '${CHEF_ADMIN_USER}'
+client_key      = '${HOME}/.chef/${CHEF_ADMIN_USER}.pem'
+chef_server_url = 'https://${CHEF_SERVER_HOSTNAME}/organizations/${ORG_NAME}'
+EOF
+
+knife upload . --profile ${CHEF_ADMIN_USER} --chef-repo-path .

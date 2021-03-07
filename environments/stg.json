@@ -1,0 +1,11 @@
+{
+  "name": "stg",
+  "default_attributes": {
+  },
+  "json_class": "Chef::Environment",
+  "description": "Staging infra",
+  "cookbook_versions": {
+    "pozoledf-k8s-node": "= 0.1.0"
+  },
+  "chef_type": "environment"
+}

@@ -1,0 +1,11 @@
+{
+  "name": "k8s-controller",
+  "chef_type": "role",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+  },
+  "description": "Kubernetes control plane role",
+  "run_list": [
+    "recipe[pozoledf-k8s-node::controller]"
+  ]
+}

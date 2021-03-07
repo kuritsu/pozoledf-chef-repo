@@ -1,0 +1,11 @@
+{
+  "name": "k8s-worker",
+  "chef_type": "role",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+  },
+  "description": "Kubernetes worker role",
+  "run_list": [
+    "recipe[pozoledf-k8s-node::worker]"
+  ]
+}

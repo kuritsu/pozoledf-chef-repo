@@ -1,0 +1,11 @@
+{
+  "name": "chef-server",
+  "chef_type": "role",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+  },
+  "description": "Chef server role",
+  "run_list": [
+    "recipe[pozoledf-chef-server]"
+  ]
+}

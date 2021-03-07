@@ -1,0 +1,11 @@
+{
+  "name": "jenkins",
+  "chef_type": "role",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+  },
+  "description": "Jenkins role",
+  "run_list": [
+    "recipe[pozoledf-jenkins]"
+  ]
+}

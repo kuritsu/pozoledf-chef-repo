@@ -1,0 +1,13 @@
+{
+  "name": "dev",
+  "default_attributes": {
+  },
+  "json_class": "Chef::Environment",
+  "description": "Development infra",
+  "cookbook_versions": {
+    "pozoledf-chef-server": "= 0.1.0",
+    "pozoledf-habitat": "= 0.1.0",
+    "pozoledf-jenkins": "= 0.1.0"
+  },
+  "chef_type": "environment"
+}

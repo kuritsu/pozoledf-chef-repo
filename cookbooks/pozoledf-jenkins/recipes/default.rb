@@ -4,6 +4,8 @@
 #
 # Copyright:: 2021, The Authors, All Rights Reserved.
 
+include_recipe 'pozoledf-habitat::default'
+
 bash 'selinux' do
   code <<-EOH
     setenforce 0
