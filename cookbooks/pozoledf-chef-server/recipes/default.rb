@@ -28,7 +28,7 @@ bash 'download-extract' do
       -keyout ssl-certificate.key \
       -subj "/C=US/ST=CA/L=Mountain View/O=Pozoledf/OU=Automation/CN=#{ENV["CHEF_SERVER_HOSTNAME"]}"
   EOH
-  creates base_dir + '/chef-automate'
+  creates "#{base_dir}/chef-automate"
 end
 
 template base_dir + '/config.toml' do
@@ -60,7 +60,7 @@ bash 'run-installer' do
   cp $service_key .
   cp $service_crt .
   EOH
-  creates base_dir + '/service.key'
+  creates "#{base_dir}/service.key"
 end
 
 bash 'create-admin-user' do
@@ -71,9 +71,11 @@ bash 'create-admin-user' do
         "$CHEF_ADMIN_USER_LAST_NAME" \
         "$CHEF_ADMIN_USER_EMAIL" \
         "$CHEF_ADMIN_USER_PASSWORD" --filename $CHEF_ADMIN_USER.pem
+    mkdir -p ~/.chef
+    cp -u ${CHEF_ADMIN_USER}.pem ~/.chef
   EOH
   environment ENV.to_h
-  creates base_dir + "/#{ENV["CHEF_ADMIN_USER"]}.pem"
+  creates "#{base_dir}/#{ENV["CHEF_ADMIN_USER"]}.pem"
 end
 
 bash 'create-org' do
@@ -83,5 +85,12 @@ bash 'create-org' do
       --association_user $CHEF_ADMIN_USER --filename $ORG_NAME.pem
   EOH
   environment ENV.to_h
-  creates base_dir + "/#{ENV["ORG_NAME"]}.pem"
+  creates "#{base_dir}/#{ENV["ORG_NAME"]}.pem"
+end
+
+template "#{ENV['HOME']}/.chef/credentials" do
+  source 'credentials.erb'
+  owner  'root'
+  group  'root'
+  mode   '0640'
 end
