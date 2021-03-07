@@ -18,9 +18,10 @@ rpm -Uvh https://packages.chef.io/files/stable/chef/16.10.17/el/8/chef-16.10.17-
 yum makecache && yum install -y git
 mkdir -p /var/chef && cd /var/chef && rm -rf repo
 git clone https://github.com/kuritsu/pozoledf-chef-repo.git repo && cd repo
-echo '{"run_list": ["recipe[pozoledf-chef-server]"]}' >run_list.json
-chef-client -z -j run_list.json --chef-license accept
+chef-client -z -r recipe[pozoledf-chef-server] --chef-license accept
 
 echo "" >/hab/svc/automate-cs-nginx/config/knife_superuser.rb
 knife ssl fetch
 knife upload . --chef-repo-path .
+
+chef-client -r role[chef-server]

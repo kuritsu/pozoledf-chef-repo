@@ -83,6 +83,7 @@ bash 'create-org' do
   code <<-EOH
     chef-server-ctl org-create $ORG_NAME "$ORG_NAME_LONG" \
       --association_user $CHEF_ADMIN_USER --filename $ORG_NAME.pem
+    cp $ORG_NAME.pem /etc/chef/$ORG_NAME.pem
   EOH
   environment ENV.to_h
   creates "#{base_dir}/#{ENV["ORG_NAME"]}.pem"
@@ -93,4 +94,11 @@ template "#{ENV['HOME']}/.chef/credentials" do
   owner  'root'
   group  'root'
   mode   '0640'
+end
+
+template '/etc/chef/client.rb' do
+  source 'client.rb.erb'
+  owner  'root'
+  group  'root'
+  mode   '0644'
 end

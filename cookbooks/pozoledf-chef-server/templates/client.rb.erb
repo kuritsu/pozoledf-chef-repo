@@ -1,0 +1,6 @@
+log_location     STDOUT
+ssl_verify_mode  :verify_none
+chef_server_url  'https://<%= ENV['CHEF_SERVER_HOSTNAME'] %>/organizations/<%= ENV['ORG_NAME'] %>'
+node_name        '<%= ENV['CHEF_SERVER_HOSTNAME'] %>'
+validation_key   '/etc/chef/<%= ENV['ORG_NAME'] %>.pem'
+environment      'dev'
