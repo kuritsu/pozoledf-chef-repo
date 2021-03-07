@@ -23,4 +23,4 @@ chef-client -z -j run_list.json --chef-license accept
 
 echo "" >/hab/svc/automate-cs-nginx/config/knife_superuser.rb
 knife ssl fetch
-knife upload . --profile ${CHEF_ADMIN_USER} --chef-repo-path .
+knife upload . --chef-repo-path .
