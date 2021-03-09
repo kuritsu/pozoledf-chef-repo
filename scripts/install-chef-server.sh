@@ -27,4 +27,19 @@ echo "ssl_verify_mode :verify_none" >/hab/svc/automate-cs-nginx/config/knife_sup
 knife ssl fetch
 bash /var/chef/repo-sync.sh
 
+token=`chef-automate iam token create event-stream --id event-stream`
+automate_cert=`cat /opt/chef-server-install/ssl-certificate.crt|awk '{printf "%s\\\n", $0}'`
+
+
+cat >automate-info.json <<EOF
+{
+  "id": "info",
+  "stream_token": "$token",
+  "cert_file": "$automate_cert"
+}
+EOF
+
+knife data bag create automate
+knife data bag from file automate automate-info.json
+
 chef-client -r role[chef-server]
