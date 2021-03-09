@@ -6,7 +6,6 @@
 
 hab_install 'install habitat' do
   license 'accept'
-  bldr_url Chef::Config['chef_server_url']
 end
 
 automate_info = data_bag_item('automate', 'info')
