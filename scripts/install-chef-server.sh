@@ -25,5 +25,6 @@ rpm -Uvh https://packages.chef.io/files/stable/chefdk/4.13.3/el/8/chefdk-4.13.3-
 echo "ssl_verify_mode :verify_none" >/hab/svc/automate-cs-nginx/config/knife_superuser.rb
 
 knife ssl fetch
+bash /var/chef/repo-sync.sh
 
 chef-client -r role[chef-server]
