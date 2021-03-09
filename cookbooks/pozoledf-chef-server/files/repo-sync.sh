@@ -1,5 +1,12 @@
 #!/bin/bash
 
+if [ -f "/var/chef/sync.lock" ]; then
+  echo "Syncing already."
+  exit 0
+fi
+
+touch /var/chef/sync.lock
+
 set -x
 
 cd /var/chef
@@ -17,3 +24,5 @@ cd policyfiles
 chef update chef-server.rb
 chef push dev chef-server.lock.json -c /hab/svc/automate-cs-nginx/config/knife_superuser.rb
 knife cookbook upload -o ~/.chefdk/cache/cookbooks/ -a
+
+rm -rf /var/chef/sync.lock
