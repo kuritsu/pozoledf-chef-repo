@@ -6,7 +6,7 @@
 
 hab_install 'install habitat' do
   license 'accept'
-  bldr_url "https://#{data_bag_item('builder', 'fqdn')}/"
+  bldr_url Chef::Config['chef_server_url']
 end
 
 file '/hab/cache/ssl/automate.pem' do
@@ -21,7 +21,7 @@ hab_sup 'default' do
   event_stream_application node['name']
   event_stream_environment node['chef_environment']
   event_stream_site node['site']
-  event_stream_url data_bag_item('automate', 'fqdn')
+  event_stream_url Chef::Config['chef_server_url']
   event_stream_token data_bag_item('automate', 'stream_token')
   event_stream_cert "/hab/cache/ssl/automate.pem"
 end

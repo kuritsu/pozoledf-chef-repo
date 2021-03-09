@@ -20,8 +20,10 @@ mkdir -p /var/chef && cd /var/chef && rm -rf repo
 git clone https://github.com/kuritsu/pozoledf-chef-repo.git repo && cd repo
 chef-client -z -r recipe[pozoledf-chef-server] --chef-license accept
 
-echo "" >/hab/svc/automate-cs-nginx/config/knife_superuser.rb
+rpm -Uvh https://packages.chef.io/files/stable/chefdk/4.13.3/el/8/chefdk-4.13.3-1.el7.x86_64.rpm
+
+echo "ssl_verify_mode :verify_none" >/hab/svc/automate-cs-nginx/config/knife_superuser.rb
+
 knife ssl fetch
-knife upload . --chef-repo-path .
 
 chef-client -r role[chef-server]

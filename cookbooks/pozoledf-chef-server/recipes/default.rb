@@ -102,3 +102,19 @@ template '/etc/chef/client.rb' do
   group  'root'
   mode   '0644'
 end
+
+cookbook_file '/var/chef/repo-sync.sh' do
+  source 'repo-sync.sh'
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create
+end
+
+cron 'sync-chef-repo' do
+  action :create
+  minute '*/5'
+  user 'root'
+  home '/var/chef'
+  command '/var/chef/repo-sync.sh >/var/log/chef-repo-sync.log'
+end
