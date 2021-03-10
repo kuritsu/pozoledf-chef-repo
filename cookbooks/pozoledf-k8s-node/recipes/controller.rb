@@ -19,3 +19,5 @@ bash 'kubectl' do
   action :run
   not_if { ::File.exist?('/var/lib/kubelet/kubeinit.log') }
 end
+
+include_recipe 'pozoledf-habitat::default'
