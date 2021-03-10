@@ -21,3 +21,12 @@ bash 'kubectl' do
 end
 
 include_recipe 'pozoledf-habitat::default'
+
+log 'message' do
+  message <<-EOM
+  ==> IMPORTANT: Check the last line of the /var/lib/kubelet/kubeinit.log file
+  on how to include a worker node to the Kubernetes cluster. Make sure you
+  run that command after the install-chef-client.sh script.
+  EOM
+  level :info
+end
