@@ -26,7 +26,7 @@ bash 'download-extract' do
       -nodes \
       -out ssl-certificate.crt \
       -keyout ssl-certificate.key \
-      -subj "/C=US/ST=CA/L=Mountain View/O=Pozoledf/OU=Automation/CN=#{ENV["CHEF_SERVER_HOSTNAME"]}"
+      -subj "/C=US/ST=CA/L=Mountain View/O=Pozoledf/OU=Automation/CN=#{node['CHEF_SERVER_HOSTNAME']}"
   EOH
   creates "#{base_dir}/chef-automate"
 end
@@ -36,8 +36,7 @@ template base_dir + '/config.toml' do
   owner  'root'
   group  'root'
   mode   '0755'
-  variables(chef_automate_fqdn: ENV['CHEF_SERVER_FQDN'],
-            base_dir: base_dir)
+  variables(base_dir: base_dir)
 end
 
 sysctl 'vm.max_map_count' do
@@ -75,7 +74,7 @@ bash 'create-admin-user' do
     cp -u ${CHEF_ADMIN_USER}.pem ~/.chef
   EOH
   environment ENV.to_h
-  creates "#{base_dir}/#{ENV["CHEF_ADMIN_USER"]}.pem"
+  creates "#{base_dir}/#{node['CHEF_ADMIN_USER']}.pem"
 end
 
 bash 'create-org' do
@@ -86,10 +85,10 @@ bash 'create-org' do
     cp $ORG_NAME.pem /etc/chef/$ORG_NAME.pem
   EOH
   environment ENV.to_h
-  creates "#{base_dir}/#{ENV["ORG_NAME"]}.pem"
+  creates "#{base_dir}/#{node['ORG_NAME']}.pem"
 end
 
-template "#{ENV['HOME']}/.chef/credentials" do
+template "/root/.chef/credentials" do
   source 'credentials.erb'
   owner  'root'
   group  'root'

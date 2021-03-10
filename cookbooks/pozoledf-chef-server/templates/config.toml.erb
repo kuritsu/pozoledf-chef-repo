@@ -7,7 +7,7 @@
   # The external fully qualified domain name.
   # When the application is deployed you should be able to access 'https://<fqdn>/'
   # to login.
-  fqdn = "<%= @chef_automate_fqdn %>"
+  fqdn = "<%= node['CHEF_SERVER_FQDN'] %>"
 
   [[global.v1.frontend_tls]]
     # The TLS certificate for the load balancer frontend.

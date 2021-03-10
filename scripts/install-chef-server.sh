@@ -15,9 +15,21 @@
 #
 
 rpm -Uvh https://packages.chef.io/files/stable/chef/16.10.17/el/8/chef-16.10.17-1.el7.x86_64.rpm
+
+mkdir -p /etc/chef
+cat >/etc/chef/attr.json <<EOF
+{
+  "CHEF_ADMIN_USER": "${CHEF_ADMIN_USER}",
+  "CHEF_SERVER_HOSTNAME": "${CHEF_SERVER_HOSTNAME}",
+  "CHEF_SERVER_FQDN": "${CHEF_SERVER_FQDN}",
+  "ORG_NAME": "${ORG_NAME}"
+}
+EOF
+
 yum makecache && yum install -y git
 mkdir -p /var/chef && cd /var/chef && rm -rf repo
 git clone https://github.com/kuritsu/pozoledf-chef-repo.git repo && cd repo
+
 chef-client -z -r recipe[pozoledf-chef-server] --chef-license accept
 
 rpm -Uvh https://packages.chef.io/files/stable/chefdk/4.13.3/el/8/chefdk-4.13.3-1.el7.x86_64.rpm
@@ -27,11 +39,13 @@ echo "ssl_verify_mode :verify_none" >/hab/svc/automate-cs-nginx/config/knife_sup
 knife ssl fetch
 bash /var/chef/repo-sync.sh
 
-token=`chef-automate iam token create event-stream --id event-stream`
-automate_cert=`cat /opt/chef-server-install/ssl-certificate.crt|awk '{printf "%s\\\n", $0}'`
+bag=`knife data bag show automate`
+if [ $? != 0 ]; then
+  bag_file="/opt/chef-server-install/automate-info.json"
+  token=`chef-automate iam token create event-stream --id event-stream`
+  automate_cert=`cat /opt/chef-server-install/ssl-certificate.crt|awk '{printf "%s\\\n", $0}'`
 
-
-cat >automate-info.json <<EOF
+  cat >$bag_file <<EOF
 {
   "id": "info",
   "stream_token": "$token",
@@ -39,7 +53,10 @@ cat >automate-info.json <<EOF
 }
 EOF
 
-knife data bag create automate
-knife data bag from file automate automate-info.json
+  knife data bag create automate
+  knife data bag from file automate $bag_file
+
+  rm -rf $bag_file
+fi
 
 chef-client -r role[chef-server]
