@@ -39,7 +39,7 @@ knife ssl fetch
 chef-client -r role[${NODE_ROLE}] --chef-license=accept
 
 echo "===> Chef Infra client and node role installed."
-echo "===> IMPORTANT:Remove the validation keys manually."
+echo "===> IMPORTANT: Remove the validation key (/etc/chef/validation.pem) manually."
 
 if [ -f "/tmp/install-chef-client-notice.txt" ]; then
   cat /tmp/install-chef-client-notice.txt

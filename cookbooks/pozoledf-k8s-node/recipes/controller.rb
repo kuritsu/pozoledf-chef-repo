@@ -24,7 +24,7 @@ include_recipe 'pozoledf-habitat::default'
 
 file '/tmp/install-chef-client-notice.txt' do
   content <<-EOM
-==> IMPORTANT: Check the last line of the /var/lib/kubelet/kubeinit.log file
+===> IMPORTANT: Check the last line of the /var/lib/kubelet/kubeinit.log file
 on how to include a worker node to the Kubernetes cluster. Make sure you
 run that command after the install-chef-client.sh script.
 EOM
