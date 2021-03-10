@@ -68,9 +68,8 @@ yum_repository 'kubernetes' do
   baseurl                    'https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch'
   description                'docker repo'
   enabled                    true
-  gpgcheck                   true
-  repo_gpgcheck              true
-  gpgkey                     'https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg'
+  gpgcheck                   false
+  repo_gpgcheck              false
   make_cache                 true
   action                     :create
 end

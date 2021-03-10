@@ -15,6 +15,7 @@
 
 rpm -Uvh https://packages.chef.io/files/stable/chef/16.10.17/el/8/chef-16.10.17-1.el7.x86_64.rpm
 
+mkdir -p /etc/chef
 cp $VALIDATE_PEM_FILE /etc/chef/validation.pem
 
 cat >/etc/chef/client.rb <<EOF
