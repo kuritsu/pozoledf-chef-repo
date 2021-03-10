@@ -30,7 +30,7 @@ yum makecache && yum install -y git
 mkdir -p /var/chef && cd /var/chef && rm -rf repo
 git clone https://github.com/kuritsu/pozoledf-chef-repo.git repo && cd repo
 
-chef-client -z -r recipe[pozoledf-chef-server] --chef-license accept
+chef-client -z -r recipe[pozoledf-chef-server] --chef-license accept -j /etc/chef/attr.json
 
 rpm -Uvh https://packages.chef.io/files/stable/chefdk/4.13.3/el/8/chefdk-4.13.3-1.el7.x86_64.rpm
 
