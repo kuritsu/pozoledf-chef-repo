@@ -80,5 +80,5 @@ yum_package %w(kubelet kubeadm kubectl tc) do
 end
 
 service 'kubelet' do
-  action [ :enable ]
+  action [ :enable, :start ]
 end
