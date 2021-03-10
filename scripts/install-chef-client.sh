@@ -40,3 +40,7 @@ chef-client -r role[${NODE_ROLE}] --chef-license=accept
 
 echo "===> Chef Infra client and node role installed."
 echo "===> IMPORTANT:Remove the validation keys manually."
+
+if [ -f "/tmp/install-chef-client-notice.txt" ]; then
+  cat /tmp/install-chef-client-notice.txt
+fi
