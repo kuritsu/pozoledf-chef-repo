@@ -2,6 +2,13 @@
 
 include_recipe '::common'
 
+directory '/var/lib/kubelet' do
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create
+end
+
 bash 'kubectl' do
   code <<-EOH
     kubeadm init >/var/lib/kubelet/kubeinit.log
