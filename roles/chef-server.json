@@ -6,6 +6,7 @@
   },
   "description": "Chef server role",
   "run_list": [
+    "recipe[chef-client]",
     "recipe[pozoledf-chef-server]"
   ]
 }

@@ -6,6 +6,7 @@
   },
   "description": "Kubernetes control plane role",
   "run_list": [
+    "recipe[chef-client]",
     "recipe[pozoledf-k8s-node::controller]"
   ]
 }
