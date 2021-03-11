@@ -51,7 +51,7 @@ To enable environment synchronization (aka channel creation), follow the next st
 This should have created a file `/hab/etc/cli.toml`. Now, every 5 minutes
 (default setting in cron), as the [repo-sync](../cookbooks/pozoledf-chef-server/files/repo-sync.sh) script runs, when it detects that the `/hab/etc/cli.toml` file
 exists, it will:
-- create and generate public and private keys for the origin named after the organization. 
-- get all environments (`.json` files under the `environments` dir), and use
-the file name as the channel name (without the `.json` extension) and will create the
+- create the origin named after the organization and push its generated keys.
+- get all environments (`.json` files under the `environments` dir), use
+the file name as the channel name (without the `.json` extension) and create the
 channel on Habitat if it doesn't exist.
