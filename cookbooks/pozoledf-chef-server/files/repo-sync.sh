@@ -22,7 +22,7 @@ knife2 upload . --chef-repo-path .
 
 cd policyfiles
 chef update chef-server.rb
-chef push dev chef-server.lock.json -c /hab/svc/automate-cs-nginx/config/knife_superuser.rb
+chef push dev chef-server.lock.json
 knife2 cookbook upload -o ~/.chefdk/cache/cookbooks/ -a
 
 cd ..
