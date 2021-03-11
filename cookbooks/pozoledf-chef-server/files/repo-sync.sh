@@ -18,12 +18,12 @@ cd repo
 git checkout main
 git pull origin main
 
-knife upload . --chef-repo-path .
+knife2 upload . --chef-repo-path .
 
 cd policyfiles
 chef update chef-server.rb
 chef push dev chef-server.lock.json -c /hab/svc/automate-cs-nginx/config/knife_superuser.rb
-knife cookbook upload -o ~/.chefdk/cache/cookbooks/ -a
+knife2 cookbook upload -o ~/.chefdk/cache/cookbooks/ -a
 
 cd ..
 cli_conf="/hab/etc/cli.toml"

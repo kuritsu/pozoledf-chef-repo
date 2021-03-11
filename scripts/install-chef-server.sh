@@ -34,12 +34,13 @@ chef-client -z -r recipe[pozoledf-chef-server] --chef-license accept -j /etc/che
 
 rpm -Uvh https://packages.chef.io/files/stable/chefdk/4.13.3/el/8/chefdk-4.13.3-1.el7.x86_64.rpm
 
-echo "ssl_verify_mode :verify_none" >/hab/svc/automate-cs-nginx/config/knife_superuser.rb
+cp -u /bin/knife /bin/knife2
+sed 's|/hab/svc/automate-cs-nginx/config/knife_superuser.rb|/root/.chef/config.rb|g' -i /bin/knife2
 
-knife ssl fetch
+knife2 ssl fetch
 bash /var/chef/repo-sync.sh
 
-bag=`knife data bag show automate`
+bag=`knife2 data bag show automate`
 if [ $? != 0 ]; then
   bag_file="/opt/chef-server-install/automate-info.json"
   token=`chef-automate iam token create event-stream --id event-stream`
@@ -53,10 +54,13 @@ if [ $? != 0 ]; then
 }
 EOF
 
-  knife data bag create automate
-  knife data bag from file automate $bag_file
+  knife2 data bag create automate
+  knife2 data bag from file automate $bag_file
 
   rm -rf $bag_file
 fi
 
 chef-client -r role[chef-server]
+
+echo "===> Chef Server installed. Use chef-server-ctl to control users and orgs."
+echo "     Use knife2 to manage the ${ORG_NAME} org objects."
