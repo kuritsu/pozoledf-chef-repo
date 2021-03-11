@@ -43,6 +43,7 @@ To enable environment synchronization (aka channel creation), follow the next st
     the `install-chef-server.sh` script.
   - Set a default origin, with the same `ORG_NAME` you used on the
     `install-chef-server.sh` script.
+  - Select `Yes` to create an origin key (it will be uploaded later, so don't forget this).
   - Choose `yes` to setup a default Builder personal token, set it to the
     token you generated earlier from the Builder page.
   - You can choose `no` to set a Habitat Supervisor control gateway secret.
