@@ -7,9 +7,12 @@ Every Chef Infra installation needs a Chef Repository. This is the place where c
 This repository contains several directories, and each directory contains a README file that describes what it is for in greater detail, and how to use it for managing your systems with Chef.
 
 - `cookbooks/` - Cookbooks you download or create.
-- `data_bags/` - Store data bags and items in .json in the repository.
-- `environments/` - Store environments.
-- `roles/` - Store roles.
+- `data_bags/` - Stores data bags and items in .json in the repository.
+- `environments/` - Stores environments. Add your application enviroments here.
+  For more details, go [here](./docs/chef-server.md#Habitat_channels).
+- `roles/` - Stores roles. Add node roles here.
+- `policyfiles` - Stores policies. They will be used to update 3rd party cookbooks on the
+  Chef Server.
 
 ## Infrastructure installation/configuration
 

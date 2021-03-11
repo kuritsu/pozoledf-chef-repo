@@ -1,2 +1,2 @@
-# pozoledf-chef-server-chef
+# pozoledf-chef-server
 PozoleDF Chef Server Cookbook
