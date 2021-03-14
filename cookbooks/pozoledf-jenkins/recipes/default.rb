@@ -18,7 +18,7 @@ kernel_module 'br_netfilter' do
   action :install
 end
 
-yum_package %w(yum-utils device-mapper-persistent-data lvm2) do
+yum_package %w(yum-utils device-mapper-persistent-data lvm2 git) do
   action :install
 end
 

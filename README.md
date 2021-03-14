@@ -18,17 +18,19 @@ This repository contains several directories, and each directory contains a READ
 
 You will need the following machines running RHEL 7|8 / CentOS 7|8 (we suggest you use [Terraform](https://www.terraform.io) if some of these components will be hosted in the cloud):
 
-- 1 x Chef Infra Server/Chef Automate (prerequisite of the other ones)
-  - Run [scripts/install-chef-server.sh](https://github.com/kuritsu/pozoledf-chef-repo/tree/main/scripts/install-chef-server.sh).
+- 1 x Chef Infra Server/Chef Automate/Chef Habitat Builder (prerequisite of the other ones)
+  - Run [scripts/install-chef-server.sh](https://github.com/kuritsu/pozoledf-chef-repo/tree/main/scripts/install-chef-server.sh), but before make sure
+    you read/fullfil the requirements documented at the beginning of the script.
 - 1 x Jenkins
-  - Run [scripts/install-chef-client.sh](https://github.com/kuritsu/pozoledf-chef-repo/tree/main/scripts/install-chef-client.sh), but before make sure you set the following
-  environment variables:
+  - Run [scripts/install-chef-client.sh](https://github.com/kuritsu/pozoledf-chef-repo/tree/main/scripts/install-chef-client.sh), but before make sure you read/fullfil the requirements documented at the beginning of the script and
+  set the following environment variables:
     - NODE_ENV: dev
     - NODE_ROLE: jenkins
 - 2 (minimum) x Staging application environment
   - K8S controller node (x1):
-    - Run [scripts/install-chef-client.sh](https://github.com/kuritsu/pozoledf-chef-repo/tree/main/scripts/install-chef-client.sh), but before make sure you set the following
-  environment variables:
+    - Run [scripts/install-chef-client.sh](https://github.com/kuritsu/pozoledf-chef-repo/tree/main/scripts/install-chef-client.sh), but before
+      make sure you read/fullfil the requirements documented at the beginning of the 
+      script and set the following environment variables:
       - NODE_ENV: stg
       - NODE_ROLE: k8s-controller
   - K8S worker node (x1+):
