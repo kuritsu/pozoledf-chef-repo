@@ -95,6 +95,13 @@ template "/root/.chef/credentials" do
   mode   '0640'
 end
 
+template "/root/.chef/config.rb" do
+  source 'config.rb.erb'
+  owner  'root'
+  group  'root'
+  mode   '0640'
+end
+
 template '/etc/chef/client.rb' do
   source 'client.rb.erb'
   owner  'root'
