@@ -36,7 +36,7 @@ if [ -f "$builder_token" ]; then
   cd environments
   envs=`ls -1 *.json|sed -e 's/\..*$//'`
   for env in $envs; do
-    hab bldr channel create $env || true
+    hab bldr channel create $env -o $ORG_NAME || true
   done
 fi
 
