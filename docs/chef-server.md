@@ -36,20 +36,10 @@ To enable environment synchronization (aka channel creation), follow the next st
 - There you can update some of the profile settings, and then click on the 
   [Generate token button](https://docs.chef.io/habitat/builder_profile/#create-a-personal-access-token).
   Save the token generated in a safe place, as you will use it later.
-- Connect to the Chef Server, then run `hab cli setup` as root.
-  - Configure an on-premise builder instance, set the URL to
-    `https://chef-server/bldr/v1/`, replace `chef-server` with
-    the same value you used for `CHEF_SERVER_HOSTNAME` after you ran
-    the `install-chef-server.sh` script.
-  - Set a default origin, with the same `ORG_NAME` you used on the
-    `install-chef-server.sh` script.
-  - Select `Yes` to create an origin key (it will be uploaded later, so don't forget this).
-  - Choose `yes` to setup a default Builder personal token, set it to the
-    token you generated earlier from the Builder page.
-  - You can choose `no` to set a Habitat Supervisor control gateway secret.
+- Connect to the Chef Server, then create a file `/var/chef/builder-token` with the
+  content of the token you recently generated.
 
-This should have created a file `/hab/etc/cli.toml`. Now, every 5 minutes
-(default setting in cron), as the [repo-sync](../cookbooks/pozoledf-chef-server/files/repo-sync.sh) script runs, when it detects that the `/hab/etc/cli.toml` file
+Now, every 5 minutes (default setting in cron), as the [repo-sync](../cookbooks/pozoledf-chef-server/files/repo-sync.sh) script runs, when it detects that the `/var/chef/builder-token` file
 exists, it will:
 - create the origin named after the organization and push its generated keys.
 - get all environments (`.json` files under the `environments` dir), use
