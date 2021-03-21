@@ -37,7 +37,7 @@ rpm -Uvh https://packages.chef.io/files/stable/chefdk/4.13.3/el/8/chefdk-4.13.3-
 cp -u /bin/knife /bin/knife2
 sed 's|/hab/svc/automate-cs-nginx/config/knife_superuser.rb|/root/.chef/config.rb|g' -i /bin/knife2
 
-knife2 ssl fetch --chef-license accept
+knife2 ssl fetch
 bash /var/chef/repo-sync.sh
 
 bag=`knife2 data bag show automate`
