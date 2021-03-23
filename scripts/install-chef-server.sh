@@ -40,26 +40,6 @@ sed 's|/hab/svc/automate-cs-nginx/config/knife_superuser.rb|/root/.chef/config.r
 knife2 ssl fetch
 bash /var/chef/repo-sync.sh
 
-bag=`knife2 data bag show automate`
-if [ $? != 0 ]; then
-  bag_file="/opt/chef-server-install/automate-info.json"
-  token=`chef-automate iam token create event-stream --id event-stream`
-  automate_cert=`cat /opt/chef-server-install/ssl-certificate.crt|awk '{printf "%s\\\n", $0}'`
-
-  cat >$bag_file <<EOF
-{
-  "id": "info",
-  "stream_token": "$token",
-  "cert_file": "$automate_cert"
-}
-EOF
-
-  knife2 data bag create automate
-  knife2 data bag from file automate $bag_file
-
-  rm -rf $bag_file
-fi
-
 chef-client -r role[chef-server]
 
 echo "===> Chef Server installed. Use chef-server-ctl to control users and orgs."

@@ -4,6 +4,8 @@
 #
 # Copyright:: 2021, The Authors, All Rights Reserved.
 
+require 'chef/data_bag'
+
 base_dir = '/opt/chef-server-install'
 
 directory base_dir do
@@ -123,4 +125,49 @@ cron 'sync-chef-repo' do
   user 'root'
   home '/var/chef'
   command '/var/chef/repo-sync.sh >/var/log/chef-repo-sync.log 2>&1'
+end
+
+unless Chef::DataBag.list.key?('automate')
+  bash 'create-automate-stream-token' do
+    cwd base_dir
+    code <<-EOH
+      chef-automate iam token create event-stream --id event-stream >automate-stream-token
+    EOH
+    environment ENV.to_h
+    creates "#{base_dir}/automate-stream-token"
+  end
+
+  stream_token = ::File.read("#{base_dir}/automate-stream-token").chomp
+  cert_file = ::File.read("#{base_dir}/ssl-certificate.crt").chomp
+
+  new_databag = Chef::DataBag.new
+  new_databag.name('automate')
+  new_databag.save
+
+  info = {
+    'id' => 'info',
+    'org' => node['ORG_NAME'],
+    'stream_token' => stream_token,
+    'stream_url' => "#{node['CHEF_SERVER_HOSTNAME']}:4222",
+    'cert_file' => cert_file,
+  }
+  databag_item = Chef::DataBagItem.new
+  databag_item.data_bag('automate')
+  databag_item.raw_data = info
+  databag_item.save
+end
+
+unless Chef::DataBag.list.key?('builder')
+  new_databag = Chef::DataBag.new
+  new_databag.name('builder')
+  new_databag.save
+
+  info = {
+    'id' => 'info',
+    'builder_url' => "https://#{node['CHEF_SERVER_HOSTNAME']}/bldr/v1"
+  }
+  databag_item = Chef::DataBagItem.new
+  databag_item.data_bag('builder')
+  databag_item.raw_data = info
+  databag_item.save
 end
