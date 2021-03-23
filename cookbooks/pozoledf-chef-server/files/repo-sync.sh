@@ -33,8 +33,12 @@ if [ -f "$builder_token" ]; then
   ORG_NAME=`knife opc org show|awk 'BEGIN { FS = ":" } ; { print $1 }'`
   export HAB_BLDR_URL=`knife2 config get chef_server_url -r|sed 's|/organizations.*|/bldr/v1|g'`
   export HAB_AUTH_TOKEN=`cat ${builder_token}`
-  hab origin create $ORG_NAME && hab origin key generate $ORG_NAME
-  hab origin key upload $ORG_NAME -s || true
+  hab origin info $ORG_NAME
+  if [ $? != 0 ]; then
+    hab origin create $ORG_NAME
+    hab origin key generate $ORG_NAME
+    hab origin key upload $ORG_NAME -s
+  fi
   cd environments
   envs=`ls -1 *.json|sed -e 's/\..*$//'`
   for env in $envs; do

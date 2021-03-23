@@ -9,6 +9,7 @@ hab_install 'install habitat' do
 end
 
 automate_info = data_bag_item('automate', 'info')
+builder_info = data_bag_item('builder', 'info')
 
 file '/hab/cache/ssl/automate.pem' do
   content automate_info['cert_file']
@@ -19,10 +20,15 @@ end
 
 hab_sup 'default' do
   license 'accept'
+  action :run
+  local_gossip_mode true
+  org automate_info['org']
+  hab_channel node['chef_environment']
+  bldr_url builder_info['builder_url']
   event_stream_application node['name']
   event_stream_environment node['chef_environment']
-  event_stream_site node['site']
-  event_stream_url Chef::Config['chef_server_url']
+  event_stream_site node['chef_environment']
+  event_stream_url automate_info['stream_url']
   event_stream_token automate_info['stream_token']
-  event_stream_cert "/hab/cache/ssl/automate.pem"
+  event_stream_cert '/hab/cache/ssl/automate.pem'
 end
