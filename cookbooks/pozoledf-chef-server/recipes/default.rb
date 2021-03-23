@@ -137,9 +137,6 @@ unless Chef::DataBag.list.key?('automate')
     creates "#{base_dir}/automate-stream-token"
   end
 
-  stream_token = ::File.read("#{base_dir}/automate-stream-token").chomp
-  cert_file = ::File.read("#{base_dir}/ssl-certificate.crt").chomp
-
   new_databag = Chef::DataBag.new
   new_databag.name('automate')
   new_databag.save
@@ -147,9 +144,9 @@ unless Chef::DataBag.list.key?('automate')
   info = {
     'id' => 'info',
     'org' => node['ORG_NAME'],
-    'stream_token' => stream_token,
+    'stream_token' => "#{::File.read("#{base_dir}/automate-stream-token").chomp}",
     'stream_url' => "#{node['CHEF_SERVER_HOSTNAME']}:4222",
-    'cert_file' => cert_file,
+    'cert_file' => "#{::File.read("#{base_dir}/ssl-certificate.crt").chomp}",
   }
   databag_item = Chef::DataBagItem.new
   databag_item.data_bag('automate')
