@@ -137,21 +137,26 @@ unless Chef::DataBag.list.key?('automate')
     creates "#{base_dir}/automate-stream-token"
   end
 
-  new_databag = Chef::DataBag.new
-  new_databag.name('automate')
-  new_databag.save
+  ruby_block 'automate-data-bag' do
+    block do
+      new_databag = Chef::DataBag.new
+      new_databag.name('automate')
+      new_databag.save
 
-  info = {
-    'id' => 'info',
-    'org' => node['ORG_NAME'],
-    'stream_token' => "#{::File.read("#{base_dir}/automate-stream-token").chomp}",
-    'stream_url' => "#{node['CHEF_SERVER_HOSTNAME']}:4222",
-    'cert_file' => "#{::File.read("#{base_dir}/ssl-certificate.crt").chomp}",
-  }
-  databag_item = Chef::DataBagItem.new
-  databag_item.data_bag('automate')
-  databag_item.raw_data = info
-  databag_item.save
+      info = {
+        'id' => 'info',
+        'org' => node['ORG_NAME'],
+        'stream_token' => "#{::File.read("#{base_dir}/automate-stream-token").chomp}",
+        'stream_url' => "#{node['CHEF_SERVER_HOSTNAME']}:4222",
+        'cert_file' => "#{::File.read("#{base_dir}/ssl-certificate.crt").chomp}",
+      }
+      databag_item = Chef::DataBagItem.new
+      databag_item.data_bag('automate')
+      databag_item.raw_data = info
+      databag_item.save
+    end
+    action :run
+  end
 end
 
 unless Chef::DataBag.list.key?('builder')
