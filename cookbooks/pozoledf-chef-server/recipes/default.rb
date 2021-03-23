@@ -131,7 +131,7 @@ unless Chef::DataBag.list.key?('automate')
   bash 'create-automate-stream-token' do
     cwd base_dir
     code <<-EOH
-      chef-automate iam token create event-stream --id event-stream >automate-stream-token
+      chef-automate iam token create event-stream --admin >automate-stream-token
     EOH
     environment ENV.to_h
     creates "#{base_dir}/automate-stream-token"
