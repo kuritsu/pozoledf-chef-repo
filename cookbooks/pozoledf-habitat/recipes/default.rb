@@ -21,7 +21,6 @@ end
 hab_sup 'default' do
   license                   'accept'
   action                    :run
-  local_gossip_mode         true
   org                       automate_info['org']
   hab_channel               node['chef_environment']
   bldr_url                  builder_info['builder_url']
