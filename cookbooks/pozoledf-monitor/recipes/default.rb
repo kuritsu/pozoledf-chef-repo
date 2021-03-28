@@ -12,6 +12,7 @@ elasticsearch_configure 'elasticsearch'
 
 elasticsearch_service 'elasticsearch'
 
+node['kibana']['url'] = 'https://artifacts.elastic.co/downloads/kibana/kibana-7.4.2-linux-x86_64.tar.gz'
 include_recipe 'kibana::default'
 
 grafana_install 'grafana'
