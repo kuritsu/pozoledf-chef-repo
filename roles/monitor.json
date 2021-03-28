@@ -1,0 +1,12 @@
+{
+  "name": "monitor",
+  "chef_type": "role",
+  "json_class": "Chef::Role",
+  "default_attributes": {
+  },
+  "description": "Monitoring and observability server role",
+  "run_list": [
+    "recipe[chef-client]",
+    "recipe[pozoledf-monitor]"
+  ]
+}

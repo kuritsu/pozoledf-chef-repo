@@ -31,3 +31,5 @@ hab_sup 'default' do
   event_stream_token        automate_info['stream_token']
   event_stream_cert         '/hab/cache/ssl/automate.pem'
 end
+
+# Ensure hab group permissions in /hab
