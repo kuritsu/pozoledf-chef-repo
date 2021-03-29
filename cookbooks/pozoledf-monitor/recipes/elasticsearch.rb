@@ -1,8 +1,9 @@
 elasticsearch_user 'elasticsearch'
 
 elasticsearch_install 'elasticsearch' do
-  type 'package'
+  type 'tarball'
   version node['elasticsearch']['version']
+  download_url node['elasticsearch']['download_url']
   action :install
 end
 
