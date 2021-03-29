@@ -15,7 +15,8 @@ run_list 'pozoledf-monitor::default'
 # Specify a custom source for a single cookbook:
 cookbook 'pozoledf-monitor', path: '.'
 
-cookbook 'elasticsearch', '~> 4.3.0', :supermarket
-cookbook 'kibana', '~> 0.2.3', :supermarket
-cookbook 'nginx', '~> 11.5.0', :supermarket
-cookbook 'grafana', '~> 9.6.0', :supermarket
+cookbook 'ark', '~> 5.1.0'
+cookbook 'elasticsearch', '~> 4.3.0'
+cookbook 'grafana', '~> 9.6.0'
+cookbook 'kibana', '~> 0.2.3'
+cookbook 'nginx', '~> 11.5.0'
