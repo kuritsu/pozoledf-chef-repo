@@ -7,6 +7,11 @@ elasticsearch_install 'elasticsearch' do
   action :install
 end
 
-elasticsearch_configure 'elasticsearch'
+elasticsearch_configure 'elasticsearch' do
+  jvm_options %w(
+    -Xms994m
+    -Xmx994m
+  )
+end
 
 elasticsearch_service 'elasticsearch'
