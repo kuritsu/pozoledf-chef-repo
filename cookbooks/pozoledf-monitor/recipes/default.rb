@@ -6,4 +6,5 @@
 
 include_recipe '::elasticsearch'
 include_recipe '::kibana'
+include_recipe '::logstash'
 include_recipe '::grafana'
