@@ -4,16 +4,14 @@
 # https://docs.chef.io/policyfile/
 
 # A name that describes what the system you're building with Chef does.
-name 'pozoledf-prometheus'
+name 'pozoledf-telegraf'
 
 # Where to find external cookbooks:
 default_source :supermarket
 
-run_list 'pozoledf-prometheus::default'
-
-named_run_list :server, "pozoledf-prometheus::server"
+run_list 'pozoledf-telegraf::default'
 
 # Specify a custom source for a single cookbook:
-cookbook 'pozoledf-prometheus', path: '.'
+cookbook 'pozoledf-telegraf', path: '.'
 
-cookbook 'prometheus-platform', '~> 2.2.0'
+cookbook 'telegraf', '~> 0.12.0'

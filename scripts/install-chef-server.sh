@@ -42,7 +42,7 @@ sed 's|/hab/svc/automate-cs-nginx/config/knife_superuser.rb|/root/.chef/config.r
 knife2 ssl fetch
 bash /var/chef/repo-sync.sh
 
-chef-client -r role[chef-server]
+chef-client -r 'role[chef-server]'
 
 echo "===> Chef Server installed. Use chef-server-ctl to control users and orgs."
 echo "     Use knife2 to manage the ${ORG_NAME} org objects."

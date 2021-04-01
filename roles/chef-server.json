@@ -8,6 +8,6 @@
   "run_list": [
     "recipe[chef-client]",
     "recipe[pozoledf-chef-server]",
-    "recipe[pozoledf-prometheus]"
+    "recipe[pozoledf-telegraf]"
   ]
 }

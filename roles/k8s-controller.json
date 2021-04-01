@@ -8,7 +8,7 @@
   "run_list": [
     "recipe[chef-client]",
     "recipe[pozoledf-k8s-node::controller]",
-    "recipe[pozoledf-sample-app::default]",
-    "recipe[pozoledf-prometheus]"
+    "recipe[pozoledf-telegraf]",
+    "recipe[pozoledf-sample-app::default]"
   ]
 }
