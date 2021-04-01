@@ -184,8 +184,8 @@ unless Chef::DataBag.list.key?('monitor')
 
   info = {
     'id' => 'info',
-    'prometheus_url' => "http://#{node['GRAFANA_HOSTNAME']}:9090",
-    'logstash_url' => "http://#{node['GRAFANA_HOSTNAME']}:9600"
+    'prometheus_fqdn' => "#{node['GRAFANA_HOSTNAME']}:9090",
+    'logstash_fqdn' => "#{node['GRAFANA_HOSTNAME']}:9600"
   }
   databag_item = Chef::DataBagItem.new
   databag_item.data_bag('monitor')
