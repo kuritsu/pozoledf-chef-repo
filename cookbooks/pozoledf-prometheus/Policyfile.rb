@@ -9,8 +9,9 @@ name 'pozoledf-prometheus'
 # Where to find external cookbooks:
 default_source :supermarket
 
-# run_list: chef-client will run these recipes in the order specified.
 run_list 'pozoledf-prometheus::default'
+
+named_run_list :server, "pozoledf-prometheus::server"
 
 # Specify a custom source for a single cookbook:
 cookbook 'pozoledf-prometheus', path: '.'
