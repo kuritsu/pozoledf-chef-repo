@@ -176,3 +176,19 @@ unless Chef::DataBag.list.key?('builder')
   databag_item.raw_data = info
   databag_item.save
 end
+
+unless Chef::DataBag.list.key?('monitor')
+  new_databag = Chef::DataBag.new
+  new_databag.name('monitor')
+  new_databag.save
+
+  info = {
+    'id' => 'info',
+    'prometheus_url' => "http://#{node['GRAFANA_HOSTNAME']}:9090",
+    'logstash_url' => "http://#{node['GRAFANA_HOSTNAME']}:9600"
+  }
+  databag_item = Chef::DataBagItem.new
+  databag_item.data_bag('monitor')
+  databag_item.raw_data = info
+  databag_item.save
+end

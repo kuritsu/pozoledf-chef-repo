@@ -9,6 +9,7 @@
 #  CHEF_ADMIN_USER_PASSWORD:   Admin user password.
 #  CHEF_SERVER_FQDN:           Public Fully Qualified name.
 #  CHEF_SERVER_HOSTNAME:       Chef server private host name.
+#  GRAFANA_HOSTNAME:           Grafana/ElasticSearch/Prometheus server hostname.
 #  ORG_NAME:                   Organization name identifier.
 #                              Must be fully lowercase and starting with a letter, no spaces.
 #  ORG_NAME_LONG:              Organization full name.
@@ -22,6 +23,7 @@ cat >/etc/chef/attr.json <<EOF
   "CHEF_ADMIN_USER": "${CHEF_ADMIN_USER}",
   "CHEF_SERVER_HOSTNAME": "${CHEF_SERVER_HOSTNAME}",
   "CHEF_SERVER_FQDN": "${CHEF_SERVER_FQDN}",
+  "GRAFANA_HOSTNAME": "${GRAFANA_HOSTNAME}",
   "ORG_NAME": "${ORG_NAME}"
 }
 EOF
