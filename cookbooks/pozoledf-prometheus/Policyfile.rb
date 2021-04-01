@@ -4,22 +4,15 @@
 # https://docs.chef.io/policyfile/
 
 # A name that describes what the system you're building with Chef does.
-name 'pozoledf-monitor'
+name 'pozoledf-prometheus'
 
 # Where to find external cookbooks:
 default_source :supermarket
 
 # run_list: chef-client will run these recipes in the order specified.
-run_list 'pozoledf-monitor::default'
+run_list 'pozoledf-prometheus::default'
 
 # Specify a custom source for a single cookbook:
-cookbook 'pozoledf-monitor', path: '.'
+cookbook 'pozoledf-prometheus', path: '.'
 
-cookbook 'pozoledf-prometheus', '~> 0.1.0', path: '../pozoledf-prometheus'
-cookbook 'ark', '~> 5.1.0'
-cookbook 'elasticsearch', '~> 4.3.0'
-cookbook 'grafana', '~> 9.6.0'
-cookbook 'java', '~> 8.6.0'
-cookbook 'kibana', '~> 0.2.3'
-cookbook 'logstash_lwrp', '~> 2.1.0'
-cookbook 'nginx', '~> 11.5.0'
+cookbook 'prometheus-platform', '~> 2.2.0'

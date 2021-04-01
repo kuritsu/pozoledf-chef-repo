@@ -1,26 +1,20 @@
-name 'pozoledf-monitor'
+name 'pozoledf-prometheus'
 maintainer 'The Authors'
 maintainer_email 'you@example.com'
 license 'All Rights Reserved'
-description 'Installs/Configures pozoledf-monitor'
+description 'Installs/Configures pozoledf-prometheus'
 version '0.1.0'
 chef_version '>= 15.0'
 
-depends 'pozoledf-prometheus', '~> 0.1.0'
-depends 'elasticsearch', '~> 4.3.0'
-depends 'grafana', '~> 9.6.0'
-depends 'java', '~> 8.6.0'
-depends 'kibana', '~> 0.2.3'
-depends 'logstash_lwrp', '~> 2.1.0'
-
+depends 'prometheus-platform', '~> 2.2.0'
 # The `issues_url` points to the location where issues for this cookbook are
 # tracked.  A `View Issues` link will be displayed on this cookbook's page when
 # uploaded to a Supermarket.
 #
-# issues_url 'https://github.com/<insert_org_here>/pozoledf-monitor/issues'
+# issues_url 'https://github.com/<insert_org_here>/pozoledf-prometheus/issues'
 
 # The `source_url` points to the development repository for this cookbook.  A
 # `View Source` link will be displayed on this cookbook's page when uploaded to
 # a Supermarket.
 #
-# source_url 'https://github.com/<insert_org_here>/pozoledf-monitor'
+# source_url 'https://github.com/<insert_org_here>/pozoledf-prometheus'
