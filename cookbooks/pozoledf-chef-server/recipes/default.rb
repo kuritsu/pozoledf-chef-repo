@@ -184,7 +184,7 @@ unless Chef::DataBag.list.key?('monitor')
 
   info = {
     'id' => 'info',
-    'graphite_fqdn' => "#{node['GRAFANA_HOSTNAME']}:2003",
+    'influxdb_fqdn' => "#{node['GRAFANA_HOSTNAME']}:8086",
     'elasticsearch_fqdn' => "#{node['GRAFANA_HOSTNAME']}:9200"
   }
   databag_item = Chef::DataBagItem.new
