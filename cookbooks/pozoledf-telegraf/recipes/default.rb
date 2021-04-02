@@ -12,6 +12,13 @@ if Chef::DataBag.list.key?('monitor')
   influxdb_fqdn = monitor['influxdb_fqdn']
 end
 
+directory '/var/log/telegraf' do
+  action :create
+  mode   '0755'
+  user   'telegraf'
+  group  'telegraf'
+end
+
 include_recipe 'telegraf::default'
 
 node.default['telegraf']['outputs'] = {
