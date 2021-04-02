@@ -15,11 +15,7 @@ run_list 'pozoledf-monitor::default'
 # Specify a custom source for a single cookbook:
 cookbook 'pozoledf-monitor', path: '.'
 
-cookbook 'pozoledf-prometheus', '~> 0.1.0', path: '../pozoledf-prometheus'
-cookbook 'ark', '~> 5.1.0'
+cookbook 'pozoledf-telegraf', '~> 0.1.0', path: '../pozoledf-telegraf'
 cookbook 'elasticsearch', '~> 4.3.0'
 cookbook 'grafana', '~> 9.6.0'
-cookbook 'java', '~> 8.6.0'
-cookbook 'kibana', '~> 0.2.3'
-cookbook 'logstash_lwrp', '~> 2.1.0'
-cookbook 'nginx', '~> 11.5.0'
+cookbook 'influxdb', '~> 6.3.1'

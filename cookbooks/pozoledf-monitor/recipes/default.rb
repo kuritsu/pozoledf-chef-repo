@@ -4,7 +4,7 @@
 #
 # Copyright:: 2021, The Authors, All Rights Reserved.
 
-include_recipe 'pozoledf-prometheus::server'
 include_recipe '::elasticsearch'
-include_recipe '::logstash'
+include_recipe '::influxdb'
 include_recipe '::grafana'
+include_recipe 'pozoledf-telegraf::default'
