@@ -15,11 +15,11 @@ end
 include_recipe 'telegraf::default'
 
 node.default['telegraf']['outputs'] = {
-  'graphite' => {
-    'servers' => [graphite_fqdn],
-    'template' => 'host.tags.measurement.field',
-    'prefix' => "#{node['chef_environment']}.#{node['name']}",
-    'timeout' => 2
+  'influxdb' => {
+    'urls' => ["http://#{influxdb_fqdn}"],
+    'database' => 'telegraf',
+    'insecure_skip_verify' => false,
+    'timeout' => '5s'
   }
 }
 
