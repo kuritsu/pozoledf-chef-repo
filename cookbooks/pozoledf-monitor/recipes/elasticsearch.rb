@@ -1,3 +1,5 @@
+corretto_install '8'
+
 elasticsearch_user 'elasticsearch'
 
 elasticsearch_install 'elasticsearch' do

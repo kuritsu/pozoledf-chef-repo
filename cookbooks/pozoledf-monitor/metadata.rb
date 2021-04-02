@@ -10,6 +10,7 @@ depends 'pozoledf-telegraf', '~> 0.1.0'
 depends 'elasticsearch', '~> 4.3.0'
 depends 'grafana', '~> 9.6.0'
 depends 'influxdb', '~> 6.3.1'
+depends 'java', '~> 8.6.0'
 
 # The `issues_url` points to the location where issues for this cookbook are
 # tracked.  A `View Issues` link will be displayed on this cookbook's page when

@@ -25,6 +25,13 @@ platforms:
       volumes:
         - /sys/fs/cgroup:/sys/fs/cgroup:ro
 
+  - name: amazon-2
+    driver:
+      image: dokken/amazonlinux
+      privileged: true
+      volumes:
+        - /sys/fs/cgroup:/sys/fs/cgroup:ro
+
 suites:
   - name: default
     verifier:
