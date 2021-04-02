@@ -6,10 +6,10 @@
 
 require 'chef/data_bag'
 
-graphite_fqdn = "localhost:2003"
+influxdb_fqdn = "localhost:8086"
 if Chef::DataBag.list.key?('monitor')
   monitor = data_bag_item('monitor', 'info')
-  graphite_fqdn = monitor['graphite_fqdn']
+  influxdb_fqdn = monitor['graphite_fqdn']
 end
 
 include_recipe 'telegraf::default'
