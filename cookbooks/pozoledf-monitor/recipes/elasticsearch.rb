@@ -10,13 +10,13 @@ elasticsearch_install 'elasticsearch' do
 end
 
 elasticsearch_configure 'elasticsearch' do
-  configuration {
+  configuration ({
     'cluster.name' => node['name'],
     'node.name' => node['name'],
     'http.port' => 9200,
     'network.host' => '0.0.0.0',
     'cluster.initial_master_nodes' => [node['name']]
-  }
+  })
 
   jvm_options %w(
     -Xms994m
