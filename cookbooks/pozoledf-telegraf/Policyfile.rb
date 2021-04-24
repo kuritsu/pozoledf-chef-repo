@@ -15,3 +15,4 @@ run_list 'pozoledf-telegraf::default'
 cookbook 'pozoledf-telegraf', path: '.'
 
 cookbook 'telegraf', '~> 0.12.0'
+cookbook 'fluentbit', git: 'https://github.com/kuritsu/chef-fluentbit.git', branch: 'v1.7.0'

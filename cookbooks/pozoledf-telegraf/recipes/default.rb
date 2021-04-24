@@ -6,11 +6,33 @@
 
 require 'chef/data_bag'
 
-influxdb_fqdn = "localhost:8086"
+influxdb_fqdn = 'localhost:8086'
+elasticsearch_fqdn = 'localhost:9200'
 if Chef::DataBag.list.key?('monitor')
   monitor = data_bag_item('monitor', 'info')
   influxdb_fqdn = monitor['influxdb_fqdn']
+  elasticsearch_fqdn = monitor['elasticsearch_fqdn']
 end
+
+include_recipe 'fluentbit::default'
+
+fluentbit_conf 'fluentbit' do
+  content <<~CONF
+    [INPUT]
+      Name  tail
+      Path  /var/log/messages
+      Tag   #{node['name']}.syslog
+
+    [OUTPUT]
+      Name  es
+      Match *.syslog
+      Host  #{elasticsearch_fqdn.split(':')[0]}
+      Port  #{elasticsearch_fqdn.split(':')[1]}
+      Index syslog
+  CONF
+end
+
+include_recipe 'telegraf::default'
 
 directory '/var/log/telegraf' do
   action :create
@@ -18,8 +40,6 @@ directory '/var/log/telegraf' do
   user   'telegraf'
   group  'telegraf'
 end
-
-include_recipe 'telegraf::default'
 
 node.default['telegraf']['outputs'] = {
   'influxdb' => {
