@@ -21,6 +21,7 @@ git pull origin main
 knife2 upload . --chef-repo-path .
 
 cd policyfiles
+rm -rf ~/.chefdk/cache/cookbooks/
 chef update chef-server.rb
 chef push dev chef-server.lock.json
 knife2 cookbook upload -o ~/.chefdk/cache/cookbooks/ -a
