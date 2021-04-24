@@ -3,7 +3,7 @@ run_list 'role[habitat]'
 default_source :supermarket
 cookbook 'chef-client', '~> 12.3.3'
 cookbook 'elasticsearch', '~> 4.3.0'
-cookbook 'fluentbit', '~> 1.7.0'
+cookbook 'fluentbit', git: 'https://github.com/kuritsu/chef-fluentbit.git', branch: 'v1.7.0'
 cookbook 'grafana', '~> 9.6.0'
 cookbook 'habitat', '~> 2.2.4'
 cookbook 'influxdb', git: 'https://github.com/kuritsu/chef-influxdb.git', branch: 'master'
