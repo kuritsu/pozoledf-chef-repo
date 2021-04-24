@@ -30,6 +30,8 @@ hab_sup 'default' do
   event_stream_url          automate_info['stream_url']
   event_stream_token        automate_info['stream_token']
   event_stream_cert         '/hab/cache/ssl/automate.pem'
+  sup_version               '1.6.288'
+  toml_config               true
 end
 
 # Ensure hab group permissions in /hab
