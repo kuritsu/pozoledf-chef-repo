@@ -30,9 +30,9 @@ spec:
           - containerPort: 2020
         env:
         - name: FLUENT_ELASTICSEARCH_HOST
-          value: "<%= elasticsearch_host %>"
+          value: "<%= @elasticsearch_host %>"
         - name: FLUENT_ELASTICSEARCH_PORT
-          value: "<%= elasticsearch_port %>"
+          value: "<%= @elasticsearch_port %>"
         volumeMounts:
         - name: varlog
           mountPath: /var/log
