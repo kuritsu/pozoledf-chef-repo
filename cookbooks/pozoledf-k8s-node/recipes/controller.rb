@@ -68,7 +68,7 @@ bash 'kubectl-logging' do
     export KUBECONFIG=/etc/kubernetes/admin.conf
     cd /var/conf/fluent-bit-logging
     kubectl create namespace logging
-    kubectl apply -f *.yaml >/var/conf/fluent-bit-logging/apply.log
+    kubectl apply -f . >/var/conf/fluent-bit-logging/apply.log 2>&1
   EOH
   action :run
   not_if { ::File.exist?('/var/conf/fluent-bit-logging/apply.log') }
