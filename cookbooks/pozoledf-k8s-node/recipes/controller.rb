@@ -1,6 +1,16 @@
 # controller recipe
 
+require 'chef/data_bag'
+
 include_recipe '::common'
+
+influxdb_fqdn = 'localhost:8086'
+elasticsearch_fqdn = 'localhost:9200'
+if Chef::DataBag.list.key?('monitor')
+  monitor = data_bag_item('monitor', 'info')
+  influxdb_fqdn = monitor['influxdb_fqdn']
+  elasticsearch_fqdn = monitor['elasticsearch_fqdn']
+end
 
 directory '/var/lib/kubelet' do
   owner 'root'
@@ -18,6 +28,50 @@ bash 'kubectl' do
   EOH
   action :run
   not_if { ::File.exist?('/var/lib/kubelet/kubeinit.log') }
+end
+
+directory '/var/conf/fluent-bit-logging' do
+  owner     'root'
+  group     'root'
+  mode      '0755'
+  recursive true
+  action    :create
+end
+
+for f in [
+  'fluent-bit-configmap',
+  'fluent-bit-role',
+  'fluent-bit-role-binding',
+  'fluent-bit-service-account'
+  ] do
+  cookbook_file "/var/conf/fluent-bit-logging/#{f}.yaml" do
+    source "fluent-bit-logging/#{f}.yaml"
+    owner 'root'
+    group 'root'
+    mode '0644'
+    action :create
+  end
+end
+
+template '/var/conf/fluent-bit-logging/fluent-bit-ds.yaml' do
+  source 'fluent-bit-ds.yaml.erb'
+  owner  'root'
+  group  'root'
+  mode   '0755'
+  variables(
+    elasticsearch_host: elasticsearch_fqdn.split(':')[0],
+    elasticsearch_port: elasticsearch_fqdn.split(':')[1])
+end
+
+bash 'kubectl-logging' do
+  code <<-EOH
+    export KUBECONFIG=/etc/kubernetes/admin.conf
+    cd /var/conf/fluent-bit-logging
+    kubectl create namespace logging
+    kubectl apply -f *.yaml >/var/conf/fluent-bit-logging/apply.log
+  EOH
+  action :run
+  not_if { ::File.exist?('/var/conf/fluent-bit-logging/apply.log') }
 end
 
 include_recipe 'pozoledf-habitat::default'
