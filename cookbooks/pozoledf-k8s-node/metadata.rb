@@ -7,6 +7,7 @@ version '0.1.0'
 chef_version '>= 15.0'
 
 depends 'pozoledf-habitat', '~> 0.1.0'
+depends 'helm', '~> 0.1.1'
 
 # The `issues_url` points to the location where issues for this cookbook are
 # tracked.  A `View Issues` link will be displayed on this cookbook's page when

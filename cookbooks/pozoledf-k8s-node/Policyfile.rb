@@ -14,3 +14,6 @@ run_list 'pozoledf-k8s-node::default'
 
 # Specify a custom source for a single cookbook:
 cookbook 'pozoledf-k8s-node', path: '.'
+
+cookbook 'pozoledf-habitat', '~> 0.1.0', path: '../pozoledf-habitat'
+cookbook 'helm', '~> 0.1.1'

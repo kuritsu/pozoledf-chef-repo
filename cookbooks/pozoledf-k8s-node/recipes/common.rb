@@ -6,6 +6,7 @@ bash 'selinux-permission' do
     sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
   EOH
   action :run
+  only_if { ::File.exist?('/etc/selinux/config') }
 end
 
 kernel_module 'br_netfilter' do
@@ -81,3 +82,5 @@ end
 service 'kubelet' do
   action [ :enable, :start ]
 end
+
+include_recipe 'helm::default'

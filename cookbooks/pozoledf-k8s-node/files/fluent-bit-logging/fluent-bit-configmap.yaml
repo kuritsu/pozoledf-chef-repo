@@ -52,6 +52,7 @@ data:
         Match           *
         Host            ${FLUENT_ELASTICSEARCH_HOST}
         Port            ${FLUENT_ELASTICSEARCH_PORT}
+        Logstash_Prefix kubernetes
         Logstash_Format On
         Replace_Dots    On
         Retry_Limit     False
