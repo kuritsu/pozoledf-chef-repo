@@ -1,0 +1,12 @@
+config:
+  outputs:
+    - influxdb:
+        urls:
+          - "http://<%= @elasticsearch_fqdn %>"
+        database: "telegraf-kubernetes"
+        retention_policy: ""
+        timeout: "5s"
+        username: ""
+        password: ""
+        user_agent: "telegraf"
+        insecure_skip_verify: false

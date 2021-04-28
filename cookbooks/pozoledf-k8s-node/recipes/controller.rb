@@ -74,18 +74,36 @@ bash 'kubectl-logging' do
   not_if { ::File.exist?('/var/conf/fluent-bit-logging/apply.log') }
 end
 
+directory '/var/conf/telegraf-kubernetes' do
+  owner     'root'
+  group     'root'
+  mode      '0755'
+  recursive true
+  action    :create
+end
+
+template '/var/conf/telegraf-kubernetes/values.yaml' do
+  source 'value.yaml.erb'
+  owner  'root'
+  group  'root'
+  mode   '0755'
+  variables(elasticsearch_fqdn: elasticsearch_fqdn)
+end
+
 bash 'kubectl-telegraf' do
+  cwd '/var/conf/telegraf-kubernetes'
   code <<-EOH
     export KUBECONFIG=/etc/kubernetes/admin.conf
     export PATH=$PATH:/usr/local/bin
+    kubectl create namespace telegraf-ds
     helm repo add influxdata https://helm.influxdata.com/
-    helm upgrade --install my-release \
-      --set config.outputs.influxdb.url=http://#{influxdb_fqdn} \
-      --set config.outputs.influxdb.database=telegraf-kubernetes \
-        influxdata/telegraf-ds >/var/conf/fluent-bit-logging/helm-telegraf.log
+    helm upgrade --install telegraf \
+      -f values.yaml \
+      -n telegraf-ds \
+      influxdata/telegraf-ds >/var/conf/telegraf-kubernetes/helm-telegraf.log
   EOH
   action :run
-  not_if { ::File.exist?('/var/conf/fluent-bit-logging/helm-telegraf.log') }
+  not_if { ::File.exist?('/var/conf/telegraf-kubernetes/helm-telegraf.log') }
 end
 
 include_recipe 'pozoledf-habitat::default'
