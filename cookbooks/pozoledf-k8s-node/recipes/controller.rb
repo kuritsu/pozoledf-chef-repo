@@ -87,7 +87,7 @@ template '/var/conf/telegraf-kubernetes/values.yaml' do
   owner  'root'
   group  'root'
   mode   '0755'
-  variables(elasticsearch_fqdn: elasticsearch_fqdn)
+  variables(influxdb_fqdn: influxdb_fqdn)
 end
 
 bash 'kubectl-telegraf' do

@@ -2,7 +2,7 @@ config:
   outputs:
     - influxdb:
         urls:
-          - "http://<%= @elasticsearch_fqdn %>"
+          - "http://<%= @influxdb_fqdn %>"
         database: "telegraf-kubernetes"
         retention_policy: ""
         timeout: "5s"
