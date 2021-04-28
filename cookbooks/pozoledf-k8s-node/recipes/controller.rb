@@ -83,7 +83,7 @@ directory '/var/conf/telegraf-kubernetes' do
 end
 
 template '/var/conf/telegraf-kubernetes/values.yaml' do
-  source 'value.yaml.erb'
+  source 'values.yaml.erb'
   owner  'root'
   group  'root'
   mode   '0755'
