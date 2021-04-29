@@ -22,9 +22,7 @@ hab_package 'core/hab-sup' do
   version '1.6.288'
 end
 
-hab_package 'core/hab-launcher' do
-  version '1.6.288'
-end
+hab_package 'core/hab-launcher'
 
 hab_sup 'default' do
   license                   'accept'
