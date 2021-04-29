@@ -20,11 +20,11 @@ end
 
 hab_package 'core/hab-sup' do
   version '1.6.288'
-done
+end
 
 hab_package 'core/hab-launcher' do
   version '1.6.288'
-done
+end
 
 hab_sup 'default' do
   license                   'accept'
