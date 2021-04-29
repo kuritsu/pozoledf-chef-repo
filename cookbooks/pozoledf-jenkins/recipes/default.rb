@@ -30,7 +30,7 @@ if redhat_platform? || centos_platform?
   end
 
   yum_package %w(containerd docker-ce docker-ce-cli) do
-    version [ '1.2.13', '19.03.11', '19.03.11' ]
+    # version [ '1.2.13', '19.03.11', '19.03.11' ]
     action :install
   end
 end
