@@ -22,8 +22,7 @@ knife2 upload . --chef-repo-path .
 
 cd policyfiles
 rm -rf ~/.chefdk/cache/cookbooks/
-chef license accept
-chef update chef-server.rb
+chef update chef-server.rb --chef-license accept
 chef push dev chef-server.lock.json
 knife2 cookbook upload -o ~/.chefdk/cache/cookbooks/ -a
 
