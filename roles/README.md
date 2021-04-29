@@ -107,4 +107,17 @@ We recommend you configure 4 data sources:
     - Version: `7.0+`
   - Logs:
     - Message field name: `log`
-    
+- InfluxDB-k8s (contains all metrics sent by Telegraf running inside Kubernetes)
+  - URL: `http://localhost:8086`
+  - Database: `telegraf-kubernetes`
+- Elasticsearch-k8s (contains all logs sent by Fluent-bit running inside Kubernetes)
+  - URL: `http://localhost:9200`
+  - Elasticsearch details:
+    - Index name: `[kubernetes-]YYYY.MM.DD`
+    - Pattern: `Daily`
+    - Time field name: `@timestamp`
+    - Version: `7.0+`
+  - Logs:
+    - Message field name: `log`
+
+Then you can import the 2 dashboards (JSON files) inside the `cookbooks/pozoledf-monitor/templates` directory of this repo.

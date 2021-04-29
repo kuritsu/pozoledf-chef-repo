@@ -58,4 +58,4 @@ You will need the following machines running RHEL 7|8 / CentOS 7|8 (we suggest y
 
 ## Next Steps
 
-Check all READMEs in every directory for more information.
+Check all READMEs in every directory for more information, **especially the one inside `roles`**.
