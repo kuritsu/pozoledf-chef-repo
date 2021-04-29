@@ -87,6 +87,24 @@ Installs the following tools:
 
 - [ElasticSearch](https://www.elastic.co/elasticsearch), for storing the logs sent by [Fluent-bit](https://fluentbit.io/) in every node and Kubernetes. It listens on port 9200 by default.
 - [InfluxDB](https://www.influxdata.com), for storing time series data, like the metrics collected by [Telegraf](https://www.influxdata.com/time-series-platform/telegraf/) in every node and Kubernetes. It listens on port 8086 by default.
-- [Grafana](https://grafana.com), for displaying charts and log reports, setting alerts and dashboards. It listens on port 80.
+- [Grafana](https://grafana.com), for displaying charts and log reports, setting alerts and dashboards. It listens on port 3000.
 
 Notice that every role installs the `pozoledf-telegraf` cookbook, which includes the Telegraf and Fluent-bit configuration for sending telemetry to this node.
+
+**IMPORTANT:** Once you can enter Grafana, enter with admin/admin and immediately change the password.
+
+### Grafana Data Source configuration
+
+We recommend you configure 4 data sources:
+- InfluxDB (contains all data sent by Telegraf installed in every VM)
+  - URL: `http://localhost:8086`
+  - Database: `telegraf`
+- Elasticsearch (contains all logs sent by Fluent-bit installed in every VM)
+  - URL: `http://localhost:9200`
+  - Elasticsearch details:
+    - Index name: `syslog`
+    - Time field name: `@timestamp`
+    - Version: `7.0+`
+  - Logs:
+    - Message field name: `log`
+    
