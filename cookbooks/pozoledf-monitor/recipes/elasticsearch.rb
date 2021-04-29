@@ -1,5 +1,5 @@
 corretto_install '8' do
-  checksum nil
+  checksum '27657fffd4e292cb9f41b013307b6a9fde653c3dbe79ac5cbef77fa803381bd3'
 end
 
 elasticsearch_user 'elasticsearch'
