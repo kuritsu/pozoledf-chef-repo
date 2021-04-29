@@ -1,7 +1,11 @@
-# Chef Infra Server
+# Roles
+
+This directory has all the node roles that PozoleDF supports. Check each role in the details below.
+
+## chef-server
 
 This server gets configured by the `cookbooks/pozoledf-chef-server` recipe, but for a
-clean install should be used the `scripts/install-chef-server.sh` script.
+clean install the `scripts/install-chef-server.sh` script should be used.
 
 It installs and configures the following software:
 
@@ -22,7 +26,7 @@ in the [cookbooks/pozoledf-chef-server/recipes/default.rb](../cookbooks/pozoledf
 
 Note that you can check the automated sync log at `/var/log/chef-repo-sync.log`.
 
-## Habitat channels
+### Habitat channels
 
 Each environment inside the `environments` directory correspond to a [Chef Habitat channel](https://docs.chef.io/habitat/pkg_promote/#continuous-deployment-using-channels), meaning
 that when configured, the environments also will be synced in Habitat Builder (installed
@@ -45,3 +49,44 @@ exists, it will:
 - get all environments (`.json` files under the `environments` dir), use
 the file name as the channel name (without the `.json` extension) and create the
 channel on Habitat if it doesn't exist.
+
+## jenkins
+
+Installs [Jenkins](https://www.jenkins.io/) together with the plugins:
+
+- [Blue Ocean](https://plugins.jenkins.io/blueocean/)
+- [GitHub](https://plugins.jenkins.io/github/)
+
+And the dependencies:
+
+- [Amazon Corretto JDK](https://aws.amazon.com/corretto/)
+- [Docker](https://docker.com)
+
+The pipelines defined in the source repos are using `Jenkinsfile` and Jenkins Pipelines running with Docker agents.
+
+**NOTE:** This Jenkins service is not officially protected with user login, you need to set that manually for now.
+
+
+## k8s-controller
+
+Installs a [Kubernetes control plane](https://kubernetes.io/docs/concepts/overview/components/), with the latest version detected, together with the following:
+
+- Docker
+- [helm](https://helm.sh/), for installing Helm charts in k8s.
+- [Chef Habitat Supervisor](https://docs.chef.io/habitat/sup/), for installing Habitat packages (our k8s manifests will be installed this way).
+
+**Note:** After running the `install-chef-client.sh` script in this node, check the last lines of the output. They will indicate what you should run to join a worker node to the cluster.
+
+## k8s-worker
+
+Installs a [Kubernetes node or worker](https://kubernetes.io/docs/concepts/overview/components/), with the latest version.
+
+## monitor
+
+Installs the following tools:
+
+- [ElasticSearch](https://www.elastic.co/elasticsearch), for storing the logs sent by [Fluent-bit](https://fluentbit.io/) in every node and Kubernetes. It listens on port 9200 by default.
+- [InfluxDB](https://www.influxdata.com), for storing time series data, like the metrics collected by [Telegraf](https://www.influxdata.com/time-series-platform/telegraf/) in every node and Kubernetes. It listens on port 8086 by default.
+- [Grafana](https://grafana.com), for displaying charts and log reports, setting alerts and dashboards. It listens on port 80.
+
+Notice that every role installs the `pozoledf-telegraf` cookbook, which includes the Telegraf and Fluent-bit configuration for sending telemetry to this node.

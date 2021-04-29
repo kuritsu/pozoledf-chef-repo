@@ -32,16 +32,18 @@ You will need the following machines running RHEL 7|8 / CentOS 7|8 (we suggest y
     - NODE_ROLE: jenkins
 - 2 (minimum) x Staging application environment
   - K8S controller node (x1):
-    - Run [scripts/install-chef-client.sh](https://github.com/kuritsu/pozoledf-chef-repo/tree/main/scripts/install-chef-client.sh), but before
-      make sure you read/fullfil the requirements documented at the beginning of the 
-      script and set the following environment variables:
+    - Run [scripts/install-chef-client.sh](https://github.com/kuritsu/pozoledf-chef-repo/tree/main/scripts/install-chef-client.sh), but before make sure you read/fullfil the requirements documented at the beginning of the script and set the following environment variables:
       - NODE_ENV: stg
       - NODE_ROLE: k8s-controller
+
+      *Check the last lines of output after running the script to learn how to add a worker node to the cluster.*
   - K8S worker node (x1+):
     - Run [scripts/install-chef-client.sh](https://github.com/kuritsu/pozoledf-chef-repo/tree/main/scripts/install-chef-client.sh), but before make sure you set the following
   environment variables:
       - NODE_ENV: stg
       - NODE_ROLE: k8s-worker
+
+      *Check the last lines of output after running the script to learn how to add this worker node to the cluster.*
 - 2 (minimum) x Production application environment
   - K8S controller node (x1):
     - Run [scripts/install-chef-client.sh](https://github.com/kuritsu/pozoledf-chef-repo/tree/main/scripts/install-chef-client.sh), but before make sure you set the following
@@ -56,4 +58,4 @@ You will need the following machines running RHEL 7|8 / CentOS 7|8 (we suggest y
 
 ## Next Steps
 
-First make sure you read every file inside the `docs` dir. Then read all READMEs in every other directory for more information.
+Check all READMEs in every directory for more information.
