@@ -45,9 +45,7 @@ service 'docker' do
   action [ :enable, :start ]
 end
 
-corretto_install '8' do
-  checksum '27657fffd4e292cb9f41b013307b6a9fde653c3dbe79ac5cbef77fa803381bd3'
-end
+openjdk_install '8'
 
 include_recipe 'jenkins::master'
 

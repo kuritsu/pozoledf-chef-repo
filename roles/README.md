@@ -65,7 +65,7 @@ And the dependencies:
 The pipelines defined in the source repos are using `Jenkinsfile` and Jenkins Pipelines running with Docker agents.
 
 **NOTE:** This Jenkins service is not officially protected with user login, you need to set that manually for now.
-
+It listens on the 8080 port.
 
 ## k8s-controller
 
