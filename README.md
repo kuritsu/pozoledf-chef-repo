@@ -21,6 +21,10 @@ You will need the following machines running RHEL 7|8 / CentOS 7|8 (we suggest y
 - 1 x Chef Infra Server/Chef Automate/Chef Habitat Builder (prerequisite of the other ones)
   - Run [scripts/install-chef-server.sh](https://github.com/kuritsu/pozoledf-chef-repo/tree/main/scripts/install-chef-server.sh), but before make sure
     you read/fullfil the requirements documented at the beginning of the script.
+- 1 x Monitor/Telemetry server
+  - Run [scripts/install-chef-client.sh](https://github.com/kuritsu/pozoledf-chef-repo/tree/main/scripts/install-chef-client.sh), but before make sure you read/fullfil the requirements documented at the beginning of the script and set the following environment variables:
+    - NODE_ENV: dev
+    - NODE_ROLE: monitor
 - 1 x Jenkins
   - Run [scripts/install-chef-client.sh](https://github.com/kuritsu/pozoledf-chef-repo/tree/main/scripts/install-chef-client.sh), but before make sure you read/fullfil the requirements documented at the beginning of the script and
   set the following environment variables:
@@ -52,4 +56,4 @@ You will need the following machines running RHEL 7|8 / CentOS 7|8 (we suggest y
 
 ## Next Steps
 
-Read the README file in each of the subdirectories for more information about what goes in those directories.
+First make sure you read every file inside the `docs` dir. Then read all READMEs in every other directory for more information.
