@@ -18,17 +18,16 @@ yum_package %w(yum-utils device-mapper-persistent-data lvm2) do
 end
 
 if redhat_platform? || centos_platform?
-  yum_repository 'docker' do
-    baseurl                    'https://download.docker.com/linux/centos/docker-ce.repo'
-    description                'docker repo'
-    enabled                    true
-    gpgcheck                   false
-    make_cache                 true
-    action                     :create
+  remote_file '/etc/yum.repos.d/docker-ce.repo' do
+    source 'https://download.docker.com/linux/centos/docker-ce.repo'
+    owner 'root'
+    group 'root'
+    mode '0644'
+    action :create
   end
 
   yum_package %w(containerd docker-ce docker-ce-cli) do
-    version [ '1.2.13', '19.03.11', '19.03.11' ]
+    # version [ '1.2.13', '19.03.11', '19.03.11' ]
     action :install
   end
 end
