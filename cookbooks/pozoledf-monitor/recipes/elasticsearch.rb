@@ -1,4 +1,6 @@
-corretto_install '8'
+corretto_install '8' do
+  checksum nil
+end
 
 elasticsearch_user 'elasticsearch'
 
