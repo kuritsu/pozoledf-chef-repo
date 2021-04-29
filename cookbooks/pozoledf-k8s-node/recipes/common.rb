@@ -74,7 +74,12 @@ yum_repository 'kubernetes' do
   action                     :create
 end
 
-yum_package %w(kubelet kubeadm kubectl tc) do
+yum_package 'tc' do
+  action :install
+  only_if { amazon_platform? }
+end
+
+yum_package %w(kubelet kubeadm kubectl) do
   action :install
 end
 
