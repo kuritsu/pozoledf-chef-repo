@@ -13,10 +13,9 @@ It installs and configures the following software:
   - [Chef Infra Server](https://docs.chef.io/server/)
   - [Chef Habitat Builder](https://docs.chef.io/habitat/builder_overview/)
 
-After completing a successfull installation, this [chef repo](https://docs.chef.io/chef_repo/) 
+After completing a successfull installation, this [chef repo](https://docs.chef.io/chef_repo/)
 will be automatically synced/uploaded to the Chef server, though you can change that behavior
-in the [cookbooks/pozoledf-chef-server/recipes/default.rb](../cookbooks/pozoledf-chef-server/recipes/default.rb) recipe and the
-[cookbooks/pozoledf-chef-server/files/repo-sync.sh](../cookbooks/pozoledf-chef-server/files/repo-sync.sh) script. The following info will be synchronized:
+in the [cookbooks/pozoledf-chef-server/recipes/default.rb](../cookbooks/pozoledf-chef-server/recipes/default.rb) recipe and the [cookbooks/pozoledf-chef-server/files/repo-sync.sh](../cookbooks/pozoledf-chef-server/files/repo-sync.sh) script. The following info will be synchronized:
 
 - `cookbooks` directory.
 - `environments` directory. See [here](#Habitat_channels) for more details on this folder.
@@ -25,6 +24,18 @@ in the [cookbooks/pozoledf-chef-server/recipes/default.rb](../cookbooks/pozoledf
 - `roles` directory.
 
 Note that you can check the automated sync log at `/var/log/chef-repo-sync.log`.
+
+### Important configuration files generated
+
+After the Chef Infra Server/Automate is installed, you will find the following **important configuration files** inside the `/opt/chef-server-install` directory:
+
+- `automate-credentials.toml`: Contains the url, user and password to enter the Chef Automate UI.
+- `automate-stream-token`: Token for streaming events from Chef apps, such as Chef Habitat or Chef Client.
+- `config.toml`: Initial configuration of the Chef Automate, you can modify it to reconfigure Chef Automate.
+- `company.pem`: Chef Infra Server company private certificate (replace `company` to the actual ORG_NAME you used for the installer configuration). You will create this very same file in every node that you'll install (like the monitor, jenkins or k8s), as Chef will use it to verify the client.
+- `admin.pem`: Admin user certificate (replace `admin` to the actual CHEF_ADMIN_USER you used for the installer configuration). Only admins should touch this file, as it gives you superpowers for interacting with Chef Server.
+- `ssl-certificate.crt`: Public SSL certificate of Chef Automate/Habitat Builder. Use it to trust the Chef Server/Automate node for custom certificates.
+- `ssl-certificate.key`: Private SSL certificate of Chef Automate/Habitat Builder.
 
 ### Habitat channels
 
@@ -54,18 +65,21 @@ channel on Habitat if it doesn't exist.
 
 Installs [Jenkins](https://www.jenkins.io/) together with the plugins:
 
-- [Blue Ocean](https://plugins.jenkins.io/blueocean/)
-- [GitHub](https://plugins.jenkins.io/github/)
+- [Blue Ocean](https://plugins.jenkins.io/blueocean)
+- [GitHub](https://plugins.jenkins.io/github)
+- [Pipeline](https://plugins.jenkins.io/workflow-aggregator)
+- [Docker Plugin](https://plugins.jenkins.io/docker-plugin)
+- [Docker Workflow](https://plugins.jenkins.io/docker-workflow)
 
 And the dependencies:
 
-- [Amazon Corretto JDK](https://aws.amazon.com/corretto/)
+- [OpenJDK 8](https://openjdk.java.net/)
 - [Docker](https://docker.com)
-
-The pipelines defined in the source repos are using `Jenkinsfile` and Jenkins Pipelines running with Docker agents.
 
 **NOTE:** This Jenkins service is not officially protected with user login, you need to set that manually for now.
 It listens on the 8080 port.
+
+The pipelines defined in the source repos are using a `Jenkinsfile` and running with Docker agents. We recommend you use the Blue Ocean UI to create the pipelines, as it will setup the GitHub credentials accordingly.
 
 ## k8s-controller
 
@@ -76,6 +90,10 @@ Installs a [Kubernetes control plane](https://kubernetes.io/docs/concepts/overvi
 - [Chef Habitat Supervisor](https://docs.chef.io/habitat/sup/), for installing Habitat packages (our k8s manifests will be installed this way).
 
 **Note:** After running the `install-chef-client.sh` script in this node, check the last lines of the output. They will indicate what you should run to join a worker node to the cluster.
+
+**Important:** If you need to configure credentials for a private Docker Registry, check the file created
+at `/home/hab/docker-private.sh.example`. Rename/copy it to `/home/hab/docker-private.sh` and modify it so that
+it creates a credentials file at `/home/hab/.docker/config.json`. This file will be read by [install.sh`](https://github.com/kuritsu/pozoledf-sample-app-deployment/blob/main/habitat/hooks/install.sh) found in the Habitat package of `pozoledf-sample-app` (or any other app that will need it) to create a k8s secret.
 
 ## k8s-worker
 
