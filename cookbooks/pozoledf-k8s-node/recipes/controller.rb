@@ -113,7 +113,8 @@ bash 'kubectl-ingress-nginx' do
     export PATH=$PATH:/usr/local/bin
     helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
     helm repo update
-    helm install ingress-nginx ingress-nginx/ingress-nginx >/var/conf/kubectl-ingress-nginx.log 2>&1
+    kubectl create namespace ingress-nginx
+    helm install ingress-nginx ingress-nginx/ingress-nginx -n ingress-nginx >/var/conf/kubectl-ingress-nginx.log 2>&1
   EOH
   action :run
   not_if { ::File.exist?('/var/conf/kubectl-ingress-nginx.log') }
