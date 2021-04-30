@@ -106,6 +106,19 @@ bash 'kubectl-telegraf' do
   not_if { ::File.exist?('/var/conf/telegraf-kubernetes/helm-telegraf.log') }
 end
 
+bash 'kubectl-ingress-nginx' do
+  cwd '/var/conf/telegraf-kubernetes'
+  code <<-EOH
+    export KUBECONFIG=/etc/kubernetes/admin.conf
+    export PATH=$PATH:/usr/local/bin
+    helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+    helm repo update
+    helm install ingress-nginx ingress-nginx/ingress-nginx >/var/conf/kubectl-ingress-nginx.log 2>&1
+  EOH
+  action :run
+  not_if { ::File.exist?('/var/conf/kubectl-ingress-nginx.log') }
+end
+
 include_recipe 'pozoledf-habitat::default'
 
 directory '/home/hab' do
