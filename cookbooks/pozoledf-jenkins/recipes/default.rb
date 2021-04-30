@@ -49,8 +49,11 @@ openjdk_install '8'
 
 include_recipe 'jenkins::master'
 
-jenkins_plugin 'github'
 jenkins_plugin 'blueocean'
+jenkins_plugin 'docker-plugin'
+jenkins_plugin 'docker-workflow'
+jenkins_plugin 'github'
+jenkins_plugin 'workflow-aggregator'
 
 jenkins_command 'safe-restart' do
   action :nothing
