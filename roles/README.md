@@ -25,6 +25,8 @@ in the [cookbooks/pozoledf-chef-server/recipes/default.rb](../cookbooks/pozoledf
 
 Note that you can check the automated sync log at `/var/log/chef-repo-sync.log`.
 
+**Important:** Chef Automate will be running at `https://chef-server.com` and Habitat Builder at `https://chef-server.com/bldr` (replace `chef-server.com` with the `CHEF_SERVER_FQDN` value you used on the installer configuration). By default it gets configured with a *self signed certificate*, meaning that you probably need to ignore the browser's errors. You can update that certificate later to one emitted by a trusted CA.
+
 ### Important configuration files generated
 
 After the Chef Infra Server/Automate is installed, you will find the following **important configuration files** inside the `/opt/chef-server-install` directory:
@@ -48,7 +50,7 @@ To enable environment synchronization (aka channel creation), follow the next st
   then go to Applications on the main menu, then click on the Habitat Builder link on the left menu)
 - Sign in with your Automate credentials.
 - Click on the Avatar menu (icon on the top right) and click Profile.
-- There you can update some of the profile settings, and then click on the 
+- There you can update some of the profile settings, and then click on the
   [Generate token button](https://docs.chef.io/habitat/builder_profile/#create-a-personal-access-token).
   Save the token generated in a safe place, as you will use it later.
 - Connect to the Chef Server, then create a file `/var/chef/builder-token` with the
