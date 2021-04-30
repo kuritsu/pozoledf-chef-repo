@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# For standard Docker registry auth
+docker login dockerregistry.com -u admin -p "My.Passw0rd--"
+
+# For AWS ECR
+# TODO

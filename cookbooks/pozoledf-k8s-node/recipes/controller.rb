@@ -108,6 +108,32 @@ end
 
 include_recipe 'pozoledf-habitat::default'
 
+directory '/home/hab' do
+  owner     'hab'
+  group     'hab'
+  mode      '0750'
+  recursive true
+  action    :create
+end
+
+cookbook_file "/home/hab/docker-private.sh.example" do
+  source "docker-private.sh.example"
+  owner 'hab'
+  group 'hab'
+  mode '0644'
+  action :create
+end
+
+bash 'hab-kubeconfig' do
+  cwd '/home/hab'
+  code <<-EOH
+    cp /etc/kubernetes/admin.conf /home/hab/kubeconfig
+    chown -R hab:hab /home/hab/kubeconfig
+  EOH
+  action :run
+  not_if { ::File.exist?('/home/hab/kubeconfig') }
+end
+
 file '/tmp/install-chef-client-notice.txt' do
   content <<-EOM
 ===> IMPORTANT: Check the last line of the /var/lib/kubelet/kubeinit.log file
