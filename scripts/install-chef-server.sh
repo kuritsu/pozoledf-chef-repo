@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Install Chef Infra Server
+# Install Chef Infra Server. Run as root!
 # Vars:
 #
 ## Admin user account name.

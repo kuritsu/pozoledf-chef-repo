@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Install Chef Infra Client and assign a role to the current node, installing
-# all extra software required for the role.
+# all extra software required for the role. Run as root!
 # Vars:
 #
 ## Node name.
