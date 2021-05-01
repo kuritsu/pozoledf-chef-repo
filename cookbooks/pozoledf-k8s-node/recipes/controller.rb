@@ -148,6 +148,12 @@ bash 'hab-kubeconfig' do
   not_if { ::File.exist?('/home/hab/kubeconfig') }
 end
 
+group 'docker' do
+  append   true
+  members  'hab'
+  action   :modify
+end
+
 file '/tmp/install-chef-client-notice.txt' do
   content <<-EOM
 ===> IMPORTANT: Check the last line of the /var/lib/kubelet/kubeinit.log file
