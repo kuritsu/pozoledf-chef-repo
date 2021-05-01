@@ -55,8 +55,15 @@ jenkins_plugin 'docker-workflow'
 jenkins_plugin 'github'
 jenkins_plugin 'workflow-aggregator'
 
+group 'docker' do
+  append   true
+  members  'jenkins'
+  action   :modify
+end
+
 jenkins_command 'safe-restart' do
   action :nothing
   subscribes :execute, 'jenkins_plugin[github]', :delayed
   subscribes :execute, 'jenkins_plugin[blueocean]', :delayed
+  subscribes :execute, 'group[docker]', :delayed
 end
