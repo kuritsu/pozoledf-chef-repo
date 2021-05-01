@@ -2,17 +2,28 @@
 #
 # Install Chef Infra Server
 # Vars:
-#  CHEF_ADMIN_USER:            Admin user account name.
-#  CHEF_ADMIN_USER_FIRST_NAME: Admin user first name.
-#  CHEF_ADMIN_USER_LAST_NAME:  Admin user last name.
-#  CHEF_ADMIN_USER_EMAIL:      Admin user email.
-#  CHEF_ADMIN_USER_PASSWORD:   Admin user password.
-#  CHEF_SERVER_FQDN:           Public Fully Qualified name.
-#  CHEF_SERVER_HOSTNAME:       Chef server private host name.
-#  GRAFANA_HOSTNAME:           Grafana/ElasticSearch/Prometheus server hostname.
-#  ORG_NAME:                   Organization name identifier.
-#                              Must be fully lowercase and starting with a letter, no spaces.
-#  ORG_NAME_LONG:              Organization full name.
+#
+## Admin user account name.
+#  export CHEF_ADMIN_USER=admin
+## Admin user first name.
+#  export CHEF_ADMIN_USER_FIRST_NAME=Administrator
+## Admin user last name.
+#  export CHEF_ADMIN_USER_LAST_NAME=Chef
+## Admin user email.
+#  export CHEF_ADMIN_USER_EMAIL=chef_admin@myorg.com
+## Admin user password.
+#  export CHEF_ADMIN_USER_PASSWORD="Ch3fAdm1nP4ss**"
+## Chef Server Public Fully Qualified name.
+#  export CHEF_SERVER_FQDN=automate.myorg.com
+## Chef server private host name (for internal network use)
+#  export CHEF_SERVER_HOSTNAME=automate.net.internal
+## Grafana/ElasticSearch/InfluxDB server hostname.
+#  export GRAFANA_HOSTNAME=monitor.net.internal
+## Organization name identifier.
+## Must be fully lowercase and starting with a letter, no spaces.
+#  export ORG_NAME=myorg
+## Organization full name.
+#  export ORG_NAME_LONG="My Organization"
 #
 
 rpm -Uvh https://packages.chef.io/files/stable/chef/16.10.17/el/8/chef-16.10.17-1.el7.x86_64.rpm

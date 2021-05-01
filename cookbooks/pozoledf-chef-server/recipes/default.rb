@@ -8,6 +8,11 @@ require 'chef/data_bag'
 
 base_dir = '/opt/chef-server-install'
 
+yum_package %w(openssl curl) do
+  action :install
+  only_if { amazon_platform? || redhat_platform_family? }
+end
+
 directory base_dir do
   owner 'root'
   group 'root'
