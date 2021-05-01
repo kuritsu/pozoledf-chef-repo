@@ -128,7 +128,6 @@ cron 'sync-chef-repo' do
   action :create
   minute '*/5'
   user 'root'
-  home '/var/chef'
   command '/var/chef/repo-sync.sh >/var/log/chef-repo-sync.log 2>&1'
 end
 
