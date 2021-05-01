@@ -152,6 +152,11 @@ group 'docker' do
   append   true
   members  'hab'
   action   :modify
+  notifies :restart, 'service[hab-sup]', :delayed
+end
+
+service 'hab-sup' do
+  action :nothing
 end
 
 file '/tmp/install-chef-client-notice.txt' do
