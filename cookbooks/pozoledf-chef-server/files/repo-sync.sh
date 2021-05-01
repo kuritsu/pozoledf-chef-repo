@@ -10,7 +10,7 @@ touch /var/chef/sync.lock
 set -x
 
 cd /var/chef
-if [ !-d "repo" ]; then
+if [ ! -d "repo" ]; then
   git clone https://github.com/kuritsu/pozoledf-chef-repo.git repo
 fi
 

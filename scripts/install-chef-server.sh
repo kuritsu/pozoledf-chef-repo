@@ -45,10 +45,10 @@ git clone https://github.com/kuritsu/pozoledf-chef-repo.git repo && cd repo
 
 chef-client -z -r recipe[pozoledf-chef-server] --chef-license accept -j /etc/chef/attr.json
 
-rpm -Uvh https://packages.chef.io/files/stable/chefdk/4.13.3/el/8/chefdk-4.13.3-1.el7.x86_64.rpm
-
-cp -u /bin/knife /bin/knife2
+\cp -r /bin/knife /bin/knife2
 sed 's|/hab/svc/automate-cs-nginx/config/knife_superuser.rb|/root/.chef/config.rb|g' -i /bin/knife2
+
+rpm -Uvh https://packages.chef.io/files/stable/chefdk/4.13.3/el/8/chefdk-4.13.3-1.el7.x86_64.rpm
 
 knife2 ssl fetch
 bash /var/chef/repo-sync.sh
