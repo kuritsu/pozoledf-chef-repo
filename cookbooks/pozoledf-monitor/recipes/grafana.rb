@@ -7,7 +7,7 @@ end
 
 grafana_datasource 'influxdb' do
   datasource(
-    name: 'InfluxDB'
+    name: 'InfluxDB',
     type: 'influxdb',
     url: 'http://localhost:8086',
     access: 'proxy',
@@ -21,7 +21,7 @@ end
 
 grafana_datasource 'influxdb-k8s' do
   datasource(
-    name: 'InfluxDB-k8s'
+    name: 'InfluxDB-k8s',
     type: 'influxdb',
     url: 'http://localhost:8086',
     access: 'proxy',
@@ -35,7 +35,7 @@ end
 
 grafana_datasource 'elasticsearch' do
   datasource(
-    name: 'Elasticsearch'
+    name: 'Elasticsearch',
     type: 'elasticsearch',
     url: 'http://localhost:9200',
     access: 'proxy',
@@ -47,15 +47,15 @@ grafana_datasource 'elasticsearch' do
       esVersion: 7,
       logMessageField: 'log',
       maxConcurrentShardRequests: 256,
-      timeField: '@timestamp'
-    },
+      timeField: '@timestamp',
+    }
   )
   action :create
 end
 
 grafana_datasource 'elasticsearch-k8s' do
   datasource(
-    name: 'Elasticsearch-k8s'
+    name: 'Elasticsearch-k8s',
     type: 'elasticsearch',
     url: 'http://localhost:9200',
     access: 'proxy',
@@ -68,8 +68,8 @@ grafana_datasource 'elasticsearch-k8s' do
       esVersion: 7,
       logMessageField: 'log',
       maxConcurrentShardRequests: 256,
-      timeField: '@timestamp'
-    },
+      timeField: '@timestamp',
+    }
   )
   action :create
 end
