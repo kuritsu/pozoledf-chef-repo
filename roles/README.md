@@ -115,7 +115,7 @@ Notice that every role installs the `pozoledf-telegraf` cookbook, which includes
 
 ### Grafana Data Source configuration
 
-We recommend you configure 4 data sources:
+We recommend you check the configuration of the following 4 data sources (Chef should create them automatically, though):
 - InfluxDB (contains all data sent by Telegraf installed in every VM)
   - URL: `http://localhost:8086`
   - Database: `telegraf`

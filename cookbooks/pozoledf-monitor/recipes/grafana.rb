@@ -54,7 +54,7 @@ grafana_datasource 'elasticsearch-k8s' do
     url: 'http://localhost:9200',
     access: 'proxy',
     database: '[kubernetes-]YYYY.MM.DD',
-    pattern: 'daily',
+    interval: 'Daily',
     isdefault: true,
     jsonData: {
       esVersion: 7,
@@ -64,4 +64,18 @@ grafana_datasource 'elasticsearch-k8s' do
     }
   )
   action :create
+end
+
+grafana_dashboard_template 'statsd' do
+  template_source 'statsd.grafana.json.erb'
+  template_cookbook template[:cookbook]
+
+  action [:create]
+end
+
+grafana_dashboard_template 'statsd-k8s' do
+  template_source 'statsd-k8s.grafana.json.erb'
+  template_cookbook template[:cookbook]
+
+  action [:create]
 end
