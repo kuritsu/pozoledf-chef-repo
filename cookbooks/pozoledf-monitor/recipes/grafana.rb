@@ -65,21 +65,3 @@ grafana_datasource 'elasticsearch-k8s' do
   )
   action :create
 end
-
-grafana_dashboard_template 'statsd' do
-  auth_proxy_header auth_header
-  template_source 'statsd.grafana.json.erb'
-  template_cookbook 'pozoledf-monitor'
-  organization 'Main Org.'
-
-  action [:create]
-end
-
-grafana_dashboard_template 'statsd-k8s' do
-  auth_proxy_header auth_header
-  template_source 'statsd-k8s.grafana.json.erb'
-  template_cookbook 'pozoledf-monitor'
-  organization 'Main Org.'
-
-  action [:create]
-end
