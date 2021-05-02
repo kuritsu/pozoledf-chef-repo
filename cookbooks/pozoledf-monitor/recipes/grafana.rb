@@ -66,7 +66,7 @@ grafana_datasource 'elasticsearch-k8s' do
   action :create
 end
 
-grafana_dashboard_template 'Statsd' do
+grafana_dashboard_template 'statsd' do
   template_source 'statsd.grafana.json.erb'
   template_cookbook 'pozoledf-monitor'
   organization 'Main Org.'
@@ -74,7 +74,7 @@ grafana_dashboard_template 'Statsd' do
   action [:create]
 end
 
-grafana_dashboard_template 'Statsd k8s' do
+grafana_dashboard_template 'statsd-k8s' do
   template_source 'statsd-k8s.grafana.json.erb'
   template_cookbook 'pozoledf-monitor'
   organization 'Main Org.'
