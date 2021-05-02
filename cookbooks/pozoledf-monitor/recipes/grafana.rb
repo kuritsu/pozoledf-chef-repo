@@ -12,8 +12,6 @@ grafana_datasource 'influxdb' do
     url: 'http://localhost:8086',
     access: 'proxy',
     database: 'telegraf',
-    user: '',
-    password: '',
     isdefault: true
   )
   action :create
@@ -26,8 +24,6 @@ grafana_datasource 'influxdb-k8s' do
     url: 'http://localhost:8086',
     access: 'proxy',
     database: 'telegraf-kubernetes',
-    user: '',
-    password: '',
     isdefault: false
   )
   action :create
@@ -40,8 +36,6 @@ grafana_datasource 'elasticsearch' do
     url: 'http://localhost:9200',
     access: 'proxy',
     database: 'syslog',
-    user: '',
-    password: '',
     isdefault: true,
     jsonData: {
       esVersion: 7,
@@ -61,8 +55,6 @@ grafana_datasource 'elasticsearch-k8s' do
     access: 'proxy',
     database: '[kubernetes-]YYYY.MM.DD',
     pattern: 'daily',
-    user: '',
-    password: '',
     isdefault: true,
     jsonData: {
       esVersion: 7,
