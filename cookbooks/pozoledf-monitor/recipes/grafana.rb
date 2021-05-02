@@ -68,14 +68,14 @@ end
 
 grafana_dashboard_template 'statsd' do
   template_source 'statsd.grafana.json.erb'
-  template_cookbook template[:cookbook]
+  template_cookbook 'pozoledf-monitor'
 
   action [:create]
 end
 
 grafana_dashboard_template 'statsd-k8s' do
   template_source 'statsd-k8s.grafana.json.erb'
-  template_cookbook template[:cookbook]
+  template_cookbook 'pozoledf-monitor'
 
   action [:create]
 end
