@@ -60,7 +60,7 @@ grafana_datasource 'elasticsearch-k8s' do
     url: 'http://localhost:9200',
     access: 'proxy',
     database: '[kubernetes-]YYYY.MM.DD',
-    pattern: 'daily'
+    pattern: 'daily',
     user: '',
     password: '',
     isdefault: true,
