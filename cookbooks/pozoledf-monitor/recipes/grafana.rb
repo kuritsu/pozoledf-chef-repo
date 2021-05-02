@@ -20,9 +20,9 @@ grafana_datasource 'influxdb' do
     url: 'http://localhost:8086',
     access: 'proxy',
     database: 'telegraf',
-    isdefault: true
+    isdefault: true,
+    organization: org
   )
-  organization org
   action :create
 end
 
@@ -33,9 +33,9 @@ grafana_datasource 'influxdb-k8s' do
     url: 'http://localhost:8086',
     access: 'proxy',
     database: 'telegraf-kubernetes',
-    isdefault: false
+    isdefault: false,
+    organization: org
   )
-  organization org
   action :create
 end
 
@@ -47,6 +47,7 @@ grafana_datasource 'elasticsearch' do
     access: 'proxy',
     database: 'syslog',
     isdefault: true,
+    organization: org,
     jsonData: {
       esVersion: 7,
       logMessageField: 'log',
@@ -54,7 +55,6 @@ grafana_datasource 'elasticsearch' do
       timeField: '@timestamp',
     }
   )
-  organization org
   action :create
 end
 
@@ -67,6 +67,7 @@ grafana_datasource 'elasticsearch-k8s' do
     database: '[kubernetes-]YYYY.MM.DD',
     interval: 'Daily',
     isdefault: true,
+    organization: org,
     jsonData: {
       esVersion: 7,
       logMessageField: 'log',
@@ -74,7 +75,6 @@ grafana_datasource 'elasticsearch-k8s' do
       timeField: '@timestamp',
     }
   )
-  organization org
   action :create
 end
 
