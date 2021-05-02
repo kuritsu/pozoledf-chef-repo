@@ -5,6 +5,14 @@ service 'grafana-server' do
   subscribes :restart, ['template[/etc/grafana/grafana.ini]', 'template[/etc/grafana/ldap.toml]'], :delayed
 end
 
+org = 'org'
+if Chef::DataBag.list.key?('automate')
+  automate_info = data_bag_item('automate', 'info')
+  org = automate_info['org']
+end
+
+grafana_organization org
+
 grafana_datasource 'influxdb' do
   datasource(
     name: 'InfluxDB',
@@ -14,6 +22,7 @@ grafana_datasource 'influxdb' do
     database: 'telegraf',
     isdefault: true
   )
+  organization org
   action :create
 end
 
@@ -26,6 +35,7 @@ grafana_datasource 'influxdb-k8s' do
     database: 'telegraf-kubernetes',
     isdefault: false
   )
+  organization org
   action :create
 end
 
@@ -44,6 +54,7 @@ grafana_datasource 'elasticsearch' do
       timeField: '@timestamp',
     }
   )
+  organization org
   action :create
 end
 
@@ -63,16 +74,9 @@ grafana_datasource 'elasticsearch-k8s' do
       timeField: '@timestamp',
     }
   )
+  organization org
   action :create
 end
-
-org = 'org'
-if Chef::DataBag.list.key?('automate')
-  automate_info = data_bag_item('automate', 'info')
-  org = automate_info['org']
-end
-
-grafana_organization org
 
 grafana_dashboard_template 'Statsd' do
   template_source 'statsd.grafana.json.erb'
