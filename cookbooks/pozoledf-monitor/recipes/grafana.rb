@@ -74,7 +74,7 @@ end
 
 grafana_organization org
 
-grafana_dashboard_template 'statsd' do
+grafana_dashboard_template 'Statsd' do
   template_source 'statsd.grafana.json.erb'
   template_cookbook 'pozoledf-monitor'
   organization org
@@ -82,7 +82,7 @@ grafana_dashboard_template 'statsd' do
   action [:create]
 end
 
-grafana_dashboard_template 'statsd-k8s' do
+grafana_dashboard_template 'Statsd k8s' do
   template_source 'statsd-k8s.grafana.json.erb'
   template_cookbook 'pozoledf-monitor'
   organization org
