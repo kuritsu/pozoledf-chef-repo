@@ -66,9 +66,18 @@ grafana_datasource 'elasticsearch-k8s' do
   action :create
 end
 
+org = 'org'
+if Chef::DataBag.list.key?('automate')
+  automate_info = data_bag_item('automate', 'info')
+  org = automate_info['org']
+end
+
+grafana_organization org
+
 grafana_dashboard_template 'statsd' do
   template_source 'statsd.grafana.json.erb'
   template_cookbook 'pozoledf-monitor'
+  organization org
 
   action [:create]
 end
@@ -76,6 +85,7 @@ end
 grafana_dashboard_template 'statsd-k8s' do
   template_source 'statsd-k8s.grafana.json.erb'
   template_cookbook 'pozoledf-monitor'
+  organization org
 
   action [:create]
 end
