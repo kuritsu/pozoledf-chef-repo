@@ -48,7 +48,7 @@ if [ -f "$builder_token" ]; then
   "origin_public_key_file": "${public_key}"
 }
 EOF
-    knife2 data bag from file builder keys builder-keys.json
+    knife2 data bag from file builder builder-keys.json
     rm -rf builder-keys.json
     hab origin key upload $ORG_NAME -s
     knife2 upload data_bags --chef-repo-path .
