@@ -38,7 +38,20 @@ if [ -f "$builder_token" ]; then
   if [ $? != 0 ]; then
     hab origin create $ORG_NAME
     hab origin key generate $ORG_NAME
+    private_key=`hab origin key export $ORG_NAME -t secret|base64 -w 0`
+    public_key=`hab origin key export $ORG_NAME|base64 -w 0`
+    cat >builder-keys.json <<EOF
+{
+  "id": "keys",
+  "hab_token": "${HAB_AUTH_TOKEN}",
+  "origin_private_key_file": "${private_key}",
+  "origin_public_key_file": "${public_key}"
+}
+EOF
+    knife2 data bag from file builder keys builder-keys.json
+    rm -rf builder-keys.json
     hab origin key upload $ORG_NAME -s
+    knife2 upload data_bags --chef-repo-path .
   fi
   cd environments
   envs=`ls -1 *.json|sed -e 's/\..*$//'`

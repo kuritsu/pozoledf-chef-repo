@@ -173,12 +173,23 @@ unless Chef::DataBag.list.key?('builder')
 
   info = {
     'id' => 'info',
-    'builder_url' => "https://#{node['CHEF_SERVER_HOSTNAME']}/bldr/v1"
+    'builder_url' => "https://#{node['CHEF_SERVER_HOSTNAME']}/bldr/v1",
+    'hab_token' => '',
+    'origin_private_key_file' => '',
+    'origin_public_key_file' => ''
   }
   databag_item = Chef::DataBagItem.new
   databag_item.data_bag('builder')
   databag_item.raw_data = info
   databag_item.save
+end
+
+builder_info = data_bag_item('builder', 'info')
+
+unless builder['hab_token'] != '' || ! ::File.Exists?('/var/chef/builder-token') do
+  builder_info['hab_token'] = ::File.read("/var/chef/builder-token").chomp
+  builder_info['origin_private_key_file'] = ::File.read("/var/chef/builder-token").chomp
+  builder_info['origin_public_key_file'] = ::File.read("/var/chef/builder-token").chomp
 end
 
 unless Chef::DataBag.list.key?('monitor')
