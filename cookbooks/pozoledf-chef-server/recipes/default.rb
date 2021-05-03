@@ -184,14 +184,6 @@ unless Chef::DataBag.list.key?('builder')
   databag_item.save
 end
 
-builder_info = data_bag_item('builder', 'info')
-
-unless builder['hab_token'] != '' || ! ::File.Exists?('/var/chef/builder-token') do
-  builder_info['hab_token'] = ::File.read("/var/chef/builder-token").chomp
-  builder_info['origin_private_key_file'] = ::File.read("/var/chef/builder-token").chomp
-  builder_info['origin_public_key_file'] = ::File.read("/var/chef/builder-token").chomp
-end
-
 unless Chef::DataBag.list.key?('monitor')
   new_databag = Chef::DataBag.new
   new_databag.name('monitor')
