@@ -61,6 +61,11 @@ group 'docker' do
   append   true
   members  'jenkins'
   action   :modify
+  notifies :restart, 'service[jenkins]', :delayed
+end
+
+service 'jenkins' do
+  action :nothing
 end
 
 automate_info = data_bag_item('automate', 'info')
