@@ -66,7 +66,7 @@ end
 automate_info = data_bag_item('automate', 'info')
 builder_bag = data_bag('builder')
 
-unless !builder_bag.include?('keys')
+if builder_bag.include?('keys')
   builder_info = data_bag_info('builder', 'info')
   builder_keys = data_bag_info('builder', 'keys')
 
