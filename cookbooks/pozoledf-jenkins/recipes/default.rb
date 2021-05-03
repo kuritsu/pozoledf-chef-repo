@@ -69,8 +69,8 @@ ruby_block 'automate-data-bag' do
     builder_bag = data_bag('builder')
 
     if builder_bag.include?('keys')
-      builder_info = data_bag_info('builder', 'info')
-      builder_keys = data_bag_info('builder', 'keys')
+      builder_info = data_bag_item('builder', 'info')
+      builder_keys = data_bag_item('builder', 'keys')
 
       jenkins_secret_text_credentials 'hab-origin' do
         id          'hab-origin'
