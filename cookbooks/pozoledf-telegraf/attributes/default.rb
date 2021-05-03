@@ -1,4 +1,4 @@
-default['telegraf']['version'] = '1.18.0'
+default['telegraf']['version'] = '1.18.2-1'
 default['telegraf']['include_repository'] = false
 default['telegraf']['install_type'] = 'file'
 default['telegraf']['config']['global_tags']['env'] = node['chef_environment']
