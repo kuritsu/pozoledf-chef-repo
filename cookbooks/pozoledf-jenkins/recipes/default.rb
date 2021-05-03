@@ -66,7 +66,10 @@ end
 automate_info = data_bag_item('automate', 'info')
 builder_bag = data_bag('builder')
 
-unless !builder_bag.key?('keys')
+unless !builder_bag.include?('keys')
+  builder_info = data_bag_info('builder', 'info')
+  builder_keys = data_bag_info('builder', 'keys')
+
   jenkins_secret_text_credentials 'hab-origin' do
     id          'hab-origin'
     description 'Chef Habitat origin/org name'
@@ -77,26 +80,26 @@ unless !builder_bag.key?('keys')
     id          'hab-origin-private-key-file'
     description 'Chef Habitat origin private key file'
     filename    "#{automate_info['org']}.sig.key"
-    data        Base64.decode64(builder_bag['keys']['origin_private_key_file'])
+    data        Base64.decode64(builder_keys['origin_private_key_file'])
   end
 
   jenkins_file_credentials 'hab-origin-public-key-file' do
     id          'hab-origin-public-key-file'
     description 'Chef Habitat origin public key file'
     filename    "#{automate_info['org']}.pub"
-    data        Base64.decode64(builder_bag['keys']['origin_public_key_file'])
+    data        Base64.decode64(builder_keys['origin_public_key_file'])
   end
 
   jenkins_secret_text_credentials 'hab-token' do
     id          'hab-token'
     description 'Chef Habitat user API token'
-    password    builder_bag['keys']['hab_token']
+    password    builder_keys['hab_token']
   end
 
   jenkins_secret_text_credentials 'hab-builder-url' do
     id          'hab-builder-url'
     description 'Chef Habitat Builder (on premise) URL'
-    password    builder_bag['info']['builder_url']
+    password    builder_info['builder_url']
   end
 end
 
