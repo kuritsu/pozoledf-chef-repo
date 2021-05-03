@@ -4,6 +4,8 @@
 #
 # Copyright:: 2021, The Authors, All Rights Reserved.
 
+require 'base64'
+
 bash 'selinux' do
   code <<-EOH
     setenforce 0
@@ -59,6 +61,43 @@ group 'docker' do
   append   true
   members  'jenkins'
   action   :modify
+end
+
+automate_info = data_bag_item('automate', 'info')
+builder_bag = data_bag('builder')
+
+unless !builder_bag.key?('keys')
+  jenkins_secret_text_credentials 'hab-origin' do
+    id          'hab-origin'
+    description 'Chef Habitat origin/org name'
+    password    automate_info['org']
+  end
+
+  jenkins_file_credentials 'hab-origin-private-key-file' do
+    id          'hab-origin-private-key-file'
+    description 'Chef Habitat origin private key file'
+    filename    "#{automate_info['org']}.sig.key"
+    data        Base64.decode64(builder_bag['keys']['origin_private_key_file'])
+  end
+
+  jenkins_file_credentials 'hab-origin-public-key-file' do
+    id          'hab-origin-public-key-file'
+    description 'Chef Habitat origin public key file'
+    filename    "#{automate_info['org']}.pub"
+    data        Base64.decode64(builder_bag['keys']['origin_public_key_file'])
+  end
+
+  jenkins_secret_text_credentials 'hab-token' do
+    id          'hab-token'
+    description 'Chef Habitat user API token'
+    password    builder_bag['keys']['hab_token']
+  end
+
+  jenkins_secret_text_credentials 'hab-builder-url' do
+    id          'hab-builder-url'
+    description 'Chef Habitat Builder (on premise) URL'
+    password    builder_bag['info']['builder_url']
+  end
 end
 
 jenkins_command 'safe-restart' do
