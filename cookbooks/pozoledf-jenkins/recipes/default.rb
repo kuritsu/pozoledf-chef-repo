@@ -63,43 +63,47 @@ group 'docker' do
   action   :modify
 end
 
-automate_info = data_bag_item('automate', 'info')
-builder_bag = data_bag('builder')
+ruby_block 'automate-data-bag' do
+  block do
+    automate_info = data_bag_item('automate', 'info')
+    builder_bag = data_bag('builder')
 
-if builder_bag.include?('keys')
-  builder_info = data_bag_info('builder', 'info')
-  builder_keys = data_bag_info('builder', 'keys')
+    if builder_bag.include?('keys')
+      builder_info = data_bag_info('builder', 'info')
+      builder_keys = data_bag_info('builder', 'keys')
 
-  jenkins_secret_text_credentials 'hab-origin' do
-    id          'hab-origin'
-    description 'Chef Habitat origin/org name'
-    password    automate_info['org']
-  end
+      jenkins_secret_text_credentials 'hab-origin' do
+        id          'hab-origin'
+        description 'Chef Habitat origin/org name'
+        password    automate_info['org']
+      end
 
-  jenkins_file_credentials 'hab-origin-private-key-file' do
-    id          'hab-origin-private-key-file'
-    description 'Chef Habitat origin private key file'
-    filename    "#{automate_info['org']}.sig.key"
-    data        Base64.decode64(builder_keys['origin_private_key_file'])
-  end
+      jenkins_file_credentials 'hab-origin-private-key-file' do
+        id          'hab-origin-private-key-file'
+        description 'Chef Habitat origin private key file'
+        filename    "#{automate_info['org']}.sig.key"
+        data        Base64.decode64(builder_keys['origin_private_key_file'])
+      end
 
-  jenkins_file_credentials 'hab-origin-public-key-file' do
-    id          'hab-origin-public-key-file'
-    description 'Chef Habitat origin public key file'
-    filename    "#{automate_info['org']}.pub"
-    data        Base64.decode64(builder_keys['origin_public_key_file'])
-  end
+      jenkins_file_credentials 'hab-origin-public-key-file' do
+        id          'hab-origin-public-key-file'
+        description 'Chef Habitat origin public key file'
+        filename    "#{automate_info['org']}.pub"
+        data        Base64.decode64(builder_keys['origin_public_key_file'])
+      end
 
-  jenkins_secret_text_credentials 'hab-token' do
-    id          'hab-token'
-    description 'Chef Habitat user API token'
-    password    builder_keys['hab_token']
-  end
+      jenkins_secret_text_credentials 'hab-token' do
+        id          'hab-token'
+        description 'Chef Habitat user API token'
+        password    builder_keys['hab_token']
+      end
 
-  jenkins_secret_text_credentials 'hab-builder-url' do
-    id          'hab-builder-url'
-    description 'Chef Habitat Builder (on premise) URL'
-    password    builder_info['builder_url']
+      jenkins_secret_text_credentials 'hab-builder-url' do
+        id          'hab-builder-url'
+        description 'Chef Habitat Builder (on premise) URL'
+        password    builder_info['builder_url']
+      end
+    end
   end
 end
 
