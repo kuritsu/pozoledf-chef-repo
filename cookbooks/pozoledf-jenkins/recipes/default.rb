@@ -73,7 +73,7 @@ if builder_bag.include?('keys')
   jenkins_secret_text_credentials 'hab-origin' do
     id          'hab-origin'
     description 'Chef Habitat origin/org name'
-    password    automate_info['org']
+    secret      automate_info['org']
   end
 
   jenkins_file_credentials 'hab-origin-private-key-file' do
@@ -93,13 +93,13 @@ if builder_bag.include?('keys')
   jenkins_secret_text_credentials 'hab-token' do
     id          'hab-token'
     description 'Chef Habitat user API token'
-    password    builder_keys['hab_token']
+    secret      builder_keys['hab_token']
   end
 
   jenkins_secret_text_credentials 'hab-builder-url' do
     id          'hab-builder-url'
     description 'Chef Habitat Builder (on premise) URL'
-    password    builder_info['builder_url']
+    secret      builder_info['builder_url']
   end
 end
 
