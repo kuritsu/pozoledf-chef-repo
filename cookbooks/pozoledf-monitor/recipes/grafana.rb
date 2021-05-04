@@ -54,13 +54,13 @@ grafana_datasource 'elasticsearch-k8s' do
     url: 'http://localhost:9200',
     access: 'proxy',
     database: '[kubernetes-]YYYY.MM.DD',
-    interval: 'Daily',
     isdefault: true,
     jsonData: {
       esVersion: 7,
       logMessageField: 'log',
       maxConcurrentShardRequests: 256,
       timeField: '@timestamp',
+      interval: 'Daily'
     }
   )
   action :create
