@@ -133,4 +133,5 @@ jenkins_command 'safe-restart' do
   subscribes :execute, 'jenkins_plugin[github]', :delayed
   subscribes :execute, 'jenkins_plugin[blueocean]', :delayed
   subscribes :execute, 'group[docker]', :delayed
+  ignore_failure true
 end
