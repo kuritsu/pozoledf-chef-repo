@@ -79,6 +79,7 @@ if builder_bag.include?('keys')
     id          'hab-origin'
     description 'Chef Habitat origin/org name'
     secret      automate_info['org']
+    ignore_failure true
   end
 
   jenkins_file_credentials 'hab-origin-private-key-file' do
@@ -86,6 +87,7 @@ if builder_bag.include?('keys')
     description 'Chef Habitat origin private key file'
     filename    "#{automate_info['org']}.sig.key"
     data        Base64.decode64(builder_keys['origin_private_key_file'])
+    ignore_failure true
   end
 
   jenkins_file_credentials 'hab-origin-public-key-file' do
@@ -93,24 +95,28 @@ if builder_bag.include?('keys')
     description 'Chef Habitat origin public key file'
     filename    "#{automate_info['org']}.pub"
     data        Base64.decode64(builder_keys['origin_public_key_file'])
+    ignore_failure true
   end
 
   jenkins_secret_text_credentials 'hab-token' do
     id          'hab-token'
     description 'Chef Habitat user API token'
     secret      builder_keys['hab_token']
+    ignore_failure true
   end
 
   jenkins_secret_text_credentials 'hab-builder-url' do
     id          'hab-builder-url'
     description 'Chef Habitat Builder (on premise) URL'
     secret      builder_info['builder_url']
+    ignore_failure true
   end
 
   jenkins_secret_text_credentials 'hab-builder-url' do
     id          'hab-builder-url'
     description 'Chef Habitat Builder (on premise) URL'
     secret      builder_info['builder_url']
+    ignore_failure true
   end
 
   jenkins_file_credentials 'hab-builder-certificate' do
@@ -118,6 +124,7 @@ if builder_bag.include?('keys')
     description 'Chef Habitat Builder/Automate SSL certificate'
     filename    "builder.pem"
     data        automate_info['cert_file']
+    ignore_failure true
   end
 end
 
