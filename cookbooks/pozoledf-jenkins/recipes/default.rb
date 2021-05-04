@@ -82,22 +82,6 @@ if builder_bag.include?('keys')
     ignore_failure true
   end
 
-  jenkins_file_credentials 'hab-origin-private-key-file' do
-    id          'hab-origin-private-key-file'
-    description 'Chef Habitat origin private key file'
-    filename    "#{automate_info['org']}.sig.key"
-    data        Base64.decode64(builder_keys['origin_private_key_file'])
-    ignore_failure true
-  end
-
-  jenkins_file_credentials 'hab-origin-public-key-file' do
-    id          'hab-origin-public-key-file'
-    description 'Chef Habitat origin public key file'
-    filename    "#{automate_info['org']}.pub"
-    data        Base64.decode64(builder_keys['origin_public_key_file'])
-    ignore_failure true
-  end
-
   jenkins_secret_text_credentials 'hab-token' do
     id          'hab-token'
     description 'Chef Habitat user API token'
