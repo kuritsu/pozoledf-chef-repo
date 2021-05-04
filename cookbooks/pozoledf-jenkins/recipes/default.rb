@@ -106,6 +106,19 @@ if builder_bag.include?('keys')
     description 'Chef Habitat Builder (on premise) URL'
     secret      builder_info['builder_url']
   end
+
+  jenkins_secret_text_credentials 'hab-builder-url' do
+    id          'hab-builder-url'
+    description 'Chef Habitat Builder (on premise) URL'
+    secret      builder_info['builder_url']
+  end
+
+  jenkins_file_credentials 'hab-builder-certificate' do
+    id          'hab-builder-certificate'
+    description 'Chef Habitat Builder/Automate SSL certificate'
+    filename    "builder.pem"
+    data        automate_info['cert_file']
+  end
 end
 
 jenkins_command 'safe-restart' do
